@@ -1,0 +1,16 @@
+{
+  "number_errors": {
+    "not_number": {
+      "error": "isNotANumber",
+      "message": "You can write numbers only."
+    },
+    "not_integer": {
+      "error": "isNotAInteger",
+      "message": "You can write integer numbers only."
+    },
+    "invalid_format": {
+      "error": "ivalidFormatDeclared",
+      "message": "The format declared for the number in the state is invalid. For valid format use 'int' or 'float'"
+    }
+  }
+}

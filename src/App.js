@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
+import useFormValidator from './hooks/useFormValidator';
 import './App.css';
 
 function App() {
+  const { changeValidator } = useFormValidator();
+  const [state, setState] = useState({
+    form_valid: false,
+    number: {
+      valid: true,
+      value: '',
+      type: 'number',
+      rules: {
+        format: 'floating',
+      },
+    },
+  });
+
+  const handleChange = (e) => {
+    const { target } = e;
+    const status = changeValidator(target, state);
+    setState(status);
+  };
+
+  const { number } = state;
+
+  console.log(number);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input name="number" onChange={handleChange} value={number.value} />
+      <div>{ number.error_message }</div>
     </div>
   );
 }
