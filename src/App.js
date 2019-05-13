@@ -12,7 +12,7 @@ function App() {
       value: '',
       type: 'number',
       rules: {
-        format: 'floating',
+        format: 'int',
       },
     },
   });
