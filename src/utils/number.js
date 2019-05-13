@@ -9,6 +9,7 @@ function number(currentValue, stateObject) {
     format = 'int',
     max_size = 6,
     min_size = 3,
+    enforce_zero = false,
   } = rules;
   const isNumber = !Number.isNaN(Number(currentValue));
   const toWrite = max_size - `${currentValue}`.length;
@@ -47,7 +48,12 @@ function number(currentValue, stateObject) {
     throw new Error(invalid_format.error);
   }
 
-  const virtualValue = writeDot ? currentValue : Number(currentValue);
+
+  let virtualValue = currentValue;
+  if (!writeDot && currentValue !== '') virtualValue = Number(currentValue);
+  if (currentValue === '' && enforce_zero) virtualValue = Number(currentValue);
+  if (currentValue === '' && !enforce_zero) virtualValue = '';
+
   numberState.value = virtualValue;
 
   if (toWrite > max_size - min_size) {
