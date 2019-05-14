@@ -30,5 +30,15 @@
       "error": "minSize",
       "message": "The min number of characters is "
     }
+  },
+  "pattern_errors": {
+    "not_pattern": {
+      "error": "notPattern",
+      "message": "The pattern is not defined in the state."
+    },
+    "not_match": {
+      "error": "patternNotMatch",
+      "message": "The current value does not match with the pattern."
+    }
   }
 }

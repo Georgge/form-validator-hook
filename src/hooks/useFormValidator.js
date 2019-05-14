@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 
-import { number, text } from '../utils/utils';
+import { number, text, pattern } from '../utils';
 
 function useFormValidator() {
   const changeValidator = (target, object) => {
@@ -13,8 +13,10 @@ function useFormValidator() {
         return { ...object, [name]: { ...number(value, object[name]) } };
       case 'text':
         return { ...object, [name]: { ...text(value, object[name]) } };
+      case 'pattern':
+        return { ...object, [name]: { ...pattern(value, object[name]) } };
       default:
-        break;
+        return { ...object };
     }
   };
 

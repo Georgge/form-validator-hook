@@ -25,6 +25,14 @@ function App() {
         max_size: 20,
       },
     },
+    pattern: {
+      valid: true,
+      value: '',
+      type: 'pattern',
+      rules: {
+
+      },
+    },
   });
 
   const handleChange = (e) => {
@@ -33,7 +41,7 @@ function App() {
     setState(status);
   };
 
-  const { number, text } = state;
+  const { number, text, pattern } = state;
 
   console.log(text);
 
@@ -49,6 +57,11 @@ function App() {
           <label>Texto</label>
           <input type="text" name="text" onChange={handleChange} value={text.value} />
           <div>{ text.error_message }</div>
+        </div>
+        <div>
+          <label>Pattern</label>
+          <input type="text" name="pattern" onChange={handleChange} value={pattern.value} />
+          <div>{ pattern.error_message }</div>
         </div>
       </form>
     </div>
