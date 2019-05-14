@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 
 import useFormValidator from './hooks/useFormValidator';
@@ -15,6 +17,14 @@ function App() {
         format: 'int',
       },
     },
+    text: {
+      valid: true,
+      value: '',
+      type: 'text',
+      rules: {
+        max_size: 20,
+      },
+    },
   });
 
   const handleChange = (e) => {
@@ -23,14 +33,24 @@ function App() {
     setState(status);
   };
 
-  const { number } = state;
+  const { number, text } = state;
 
-  console.log(number);
+  console.log(text);
 
   return (
     <div className="App">
-      <input name="number" onChange={handleChange} value={number.value} />
-      <div>{ number.error_message }</div>
+      <form>
+        <div>
+          <label>Numero</label>
+          <input name="number" onChange={handleChange} value={number.value} />
+          <div>{ number.error_message }</div>
+        </div>
+        <div>
+          <label>Texto</label>
+          <input type="text" name="text" onChange={handleChange} value={text.value} />
+          <div>{ text.error_message }</div>
+        </div>
+      </form>
     </div>
   );
 }

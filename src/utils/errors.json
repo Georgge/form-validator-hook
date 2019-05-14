@@ -20,5 +20,15 @@
       "error": "minSize",
       "message": "The min number of characters is "
     }
+  },
+  "text_errors": {
+    "max_size": {
+      "error": "maxSize",
+      "message": "The max numbers of characters is "
+    },
+    "min_size": {
+      "error": "minSize",
+      "message": "The min number of characters is "
+    }
   }
 }

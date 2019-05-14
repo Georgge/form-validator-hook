@@ -3,12 +3,12 @@ import { setStandarError } from './error';
 
 function number(currentValue, stateObject) {
   const { number_errors } = Errors;
-  let numberState = stateObject;
-  const { value, rules } = numberState;
+  const numberState = stateObject;
+  const { rules } = numberState;
   const {
     format = 'int',
-    max_size = 6,
-    min_size = 3,
+    max_size = 7,
+    min_size = 1,
     enforce_zero = false,
   } = rules;
   const isNumber = !Number.isNaN(Number(currentValue));
