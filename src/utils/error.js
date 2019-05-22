@@ -7,7 +7,28 @@ function setStandarError(object, array, string) {
   return { ...objectValue };
 }
 
+function createMaxSizeError(Errors, size, errors) {
+  const errorSize = { errors: [], msg: '' };
+  const { max_size } = Errors;
+
+  errorSize.msg = `${max_size.message}${size}`;
+  errorSize.errors = [...errors, max_size.error];
+
+  return { ...errorSize };
+}
+
+function createMinSizeError(Errors, size, errors) {
+  const errorSize = { errors: [], msg: '' };
+  const { min_size } = Errors;
+
+  errorSize.msg = `${min_size.message}${size}`;
+  errorSize.errors = [...errors, min_size.error];
+
+  return { ...errorSize };
+}
+
 export {
-  // eslint-disable-next-line import/prefer-default-export
   setStandarError,
+  createMaxSizeError,
+  createMinSizeError,
 };

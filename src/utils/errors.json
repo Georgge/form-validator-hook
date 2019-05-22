@@ -39,6 +39,14 @@
     "not_match": {
       "error": "patternNotMatch",
       "message": "The current value does not match with the pattern."
+    },
+    "max_size": {
+      "error": "maxSize",
+      "message": "The max numbers of characters is "
+    },
+    "min_size": {
+      "error": "minSize",
+      "message": "The min number of characters is "
     }
   }
 }

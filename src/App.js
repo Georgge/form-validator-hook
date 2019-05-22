@@ -29,8 +29,10 @@ function App() {
       valid: true,
       value: '',
       type: 'pattern',
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       rules: {
-
+        max_size: 10,
+        min_size: 5,
       },
     },
   });
@@ -43,7 +45,7 @@ function App() {
 
   const { number, text, pattern } = state;
 
-  console.log(text);
+  console.log(pattern);
 
   return (
     <div className="App">
