@@ -1,5 +1,6 @@
 import Errors from './errors.json';
 import { maxSizeValidation, minSizeValidation } from './generic_validations';
+import { setStandarError } from './error';
 
 function pattern(currentValue, object) {
   const patternState = object;
@@ -20,10 +21,19 @@ function pattern(currentValue, object) {
   const maxSizeValid = maxSizeValidation(toWrite, max_size, pattern_errors, errors, patternState);
   if (maxSizeValid) return { ...maxSizeValid };
 
+  // Current value is setting in state
   patternState.value = currentValue;
 
-  const minSizeValid = minSizeValidation(toWrite, max_size, min_size, pattern_errors, errors, patternState);
-  if (minSizeValid) return { ...minSizeValid };
+  minSizeValidation(toWrite, max_size, min_size, pattern_errors, errors, (errorsArray, msg) => {
+    patternState.errors = errorsArray;
+    pattern.error_message = msg;
+  });
+
+  // if (!pttrn.test(currentValue)) {
+  //   const { not_match } = pattern_errors;
+  //   const error = setStandarError(patternState, not_match);
+  //   return { ...error };
+  // }
 
   return { ...patternState, errors: [], error_message: '', to_write: toWrite };
 }
