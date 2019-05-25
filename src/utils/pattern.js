@@ -1,9 +1,10 @@
 import Errors from './errors.json';
-import { maxSizeValidation, minSizeValidation } from './generic_validations';
-import { setStandarError } from './error';
+import {
+  maxSizeValidation, minSizeValidation, patternMatchValidation,
+} from './generic_validations';
 
-function pattern(currentValue, object) {
-  const patternState = object;
+function pattern(currentValue, state, name, stateChange) {
+  const patternState = state[name];
   const { pattern_errors } = Errors;
   const { pattern: pttrn, rules, errors = [] } = patternState;
   const {
@@ -18,24 +19,47 @@ function pattern(currentValue, object) {
     throw new Error(`${not_pattern.error} ${not_pattern.message}`);
   }
 
-  const maxSizeValid = maxSizeValidation(toWrite, max_size, pattern_errors, errors, patternState);
-  if (maxSizeValid) return { ...maxSizeValid };
+  if (rules.clear_max_size_error && !stateChange) {
+    throw new Error('setState function is requiered');
+  }
+
+  const maxError = maxSizeValidation(toWrite, max_size, pattern_errors, errors,
+    (errorsArray, msg) => {
+      const errorMsg = patternState.error_message;
+      patternState.errors = errorsArray;
+      patternState.error_message = msg;
+      if (msg.length > 0) {
+        setTimeout(() => {
+          stateChange({
+            [name]: {
+              ...state[name],
+              errors: [],
+              error_message: errorMsg,
+            },
+          });
+        }, 1200);
+        return true;
+      }
+      return false;
+    });
+  if (maxError) return { ...patternState };
+
 
   // Current value is setting in state
   patternState.value = currentValue;
+  patternState.to_write = toWrite;
+
+  patternMatchValidation(pttrn, currentValue, pattern_errors, errors, (errorsArray, msg) => {
+    patternState.errors = errorsArray;
+    if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+  });
 
   minSizeValidation(toWrite, max_size, min_size, pattern_errors, errors, (errorsArray, msg) => {
     patternState.errors = errorsArray;
-    pattern.error_message = msg;
+    if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
   });
 
-  // if (!pttrn.test(currentValue)) {
-  //   const { not_match } = pattern_errors;
-  //   const error = setStandarError(patternState, not_match);
-  //   return { ...error };
-  // }
-
-  return { ...patternState, errors: [], error_message: '', to_write: toWrite };
+  return { ...patternState };
 }
 
 export default pattern;

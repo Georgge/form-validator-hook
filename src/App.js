@@ -33,13 +33,21 @@ function App() {
       rules: {
         max_size: 10,
         min_size: 5,
+        clear_max_size_error: true,
       },
     },
   });
 
+  const changeState = (props) => {
+    setState({
+      ...state,
+      ...props,
+    });
+  };
+
   const handleChange = (e) => {
     const { target } = e;
-    const status = changeValidator(target, state);
+    const status = changeValidator(target, state, changeState);
     setState(status);
   };
 
