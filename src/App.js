@@ -39,22 +39,16 @@ function App() {
     },
   });
 
-  const changeState = (props) => {
-    setState({
-      ...state,
-      ...props,
-    });
-  };
 
   const handleChange = (e) => {
     const { target } = e;
-    const status = changeValidator(target, state, changeState);
+    const status = changeValidator(target, state);
     setState(status);
   };
 
   const { number, text, pattern } = state;
 
-  console.log(pattern);
+  console.log(number);
 
   return (
     <div className="App">

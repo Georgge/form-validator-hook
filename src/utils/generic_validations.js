@@ -39,9 +39,27 @@ function patternMatchValidation(pattern, value, errorCodes, currentErrors, callb
   return callback(errors, '');
 }
 
+function isNumber(value) {
+  return !Number.isNaN(Number(value));
+}
+
+function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
+  const isNum = isNumber(value);
+  const { not_number } = errorCodes;
+  if (!isNum) {
+    const errors = setStandarError(currentErrors, not_number.error);
+    return callback(errors, not_number.message);
+  }
+
+  const errors = removeStandarError(currentErrors, not_number.error);
+  return callback(errors, '');
+}
+
 
 export {
   maxSizeValidation,
   minSizeValidation,
   patternMatchValidation,
+  isNumber,
+  isNotNumberValidation,
 };
