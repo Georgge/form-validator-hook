@@ -1,4 +1,5 @@
 import Errors from './errors.json';
+import { removeStandarError } from './error';
 import {
   maxSizeValidation, minSizeValidation, patternMatchValidation,
 } from './generic_validations';
@@ -25,15 +26,17 @@ function pattern(currentValue, state, name, stateChange) {
 
   const maxError = maxSizeValidation(toWrite, max_size, pattern_errors, errors,
     (errorsArray, msg) => {
+      const { max_size: max } = pattern_errors;
       const errorMsg = patternState.error_message;
       patternState.errors = errorsArray;
       patternState.error_message = msg;
       if (msg.length > 0) {
         setTimeout(() => {
+          const errs = removeStandarError(errors, max.error);
           stateChange({
             [name]: {
               ...state[name],
-              errors: [],
+              errors: errs,
               error_message: errorMsg,
             },
           });
@@ -49,15 +52,17 @@ function pattern(currentValue, state, name, stateChange) {
   patternState.value = currentValue;
   patternState.to_write = toWrite;
 
-  patternMatchValidation(pttrn, currentValue, pattern_errors, errors, (errorsArray, msg) => {
-    patternState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
-  });
+  patternMatchValidation(pttrn, currentValue, pattern_errors, patternState.errors,
+    (errorsArray, msg) => {
+      patternState.errors = errorsArray;
+      if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+    });
 
-  minSizeValidation(toWrite, max_size, min_size, pattern_errors, errors, (errorsArray, msg) => {
-    patternState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
-  });
+  minSizeValidation(toWrite, max_size, min_size, pattern_errors, patternState.errors,
+    (errorsArray, msg) => {
+      patternState.errors = errorsArray;
+      if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+    });
 
   return { ...patternState };
 }
