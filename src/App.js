@@ -23,6 +23,7 @@ function App() {
       type: 'text',
       rules: {
         max_size: 20,
+        min_size: 5,
       },
     },
     pattern: {

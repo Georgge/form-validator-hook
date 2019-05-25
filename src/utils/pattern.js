@@ -1,10 +1,9 @@
 import Errors from './errors.json';
-import { removeStandarError } from './error';
 import {
   maxSizeValidation, minSizeValidation, patternMatchValidation,
 } from './generic_validations';
 
-function pattern(currentValue, state, name, stateChange) {
+function pattern(currentValue, state, name) {
   const patternState = state[name];
   const { pattern_errors } = Errors;
   const { pattern: pttrn, rules, errors = [] } = patternState;
@@ -20,29 +19,11 @@ function pattern(currentValue, state, name, stateChange) {
     throw new Error(`${not_pattern.error} ${not_pattern.message}`);
   }
 
-  if (rules.clear_max_size_error && !stateChange) {
-    throw new Error('setState function is requiered');
-  }
-
   const maxError = maxSizeValidation(toWrite, max_size, pattern_errors, errors,
     (errorsArray, msg) => {
-      const { max_size: max } = pattern_errors;
-      const errorMsg = patternState.error_message;
       patternState.errors = errorsArray;
       patternState.error_message = msg;
-      if (msg.length > 0) {
-        setTimeout(() => {
-          const errs = removeStandarError(errors, max.error);
-          stateChange({
-            [name]: {
-              ...state[name],
-              errors: errs,
-              error_message: errorMsg,
-            },
-          });
-        }, 1200);
-        return true;
-      }
+      if (msg.length > 0) return true;
       return false;
     });
   if (maxError) return { ...patternState };

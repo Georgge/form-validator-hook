@@ -4,17 +4,17 @@ import React from 'react';
 import { number, text, pattern } from '../utils';
 
 function useFormValidator() {
-  const changeValidator = (target, object, setState) => {
+  const changeValidator = (target, object) => {
     const { name, value } = target;
     const { type } = object[name];
 
     switch (type) {
       case 'number':
-        return { ...object, [name]: { ...number(value, object, name, setState) } };
+        return { ...object, [name]: { ...number(value, object, name) } };
       case 'text':
-        return { ...object, [name]: { ...text(value, object, name, setState) } };
+        return { ...object, [name]: { ...text(value, object, name) } };
       case 'pattern':
-        return { ...object, [name]: { ...pattern(value, object, name, setState) } };
+        return { ...object, [name]: { ...pattern(value, object, name) } };
       default:
         return { ...object };
     }

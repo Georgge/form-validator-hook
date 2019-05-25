@@ -1,39 +1,36 @@
 import Errors from './errors.json';
-import { setStandarError } from './error';
+import { maxSizeValidation, minSizeValidation } from './generic_validations';
 
-function text(currentValue, object) {
-  const textState = object;
+function text(currentValue, state, name) {
+  const textState = state[name];
   const { text_errors } = Errors;
-  const { rules } = textState;
+  const { rules, errors = [] } = textState;
   const {
     max_size = 100,
     min_size = 0,
   } = rules;
-  const toWrite = max_size - currentValue.length;
-  let errors = [];
 
-  if (toWrite + 1 === 0) {
-    const { max_size: max } = text_errors;
-    const msg = `${max.message}${max_size}.`;
-    errors = [...errors, max.error];
-    const error = setStandarError(textState, errors, msg);
-    return { ...error };
-  }
+  const toWrite = max_size - `${currentValue}`.length;
+
+  const maxError = maxSizeValidation(toWrite, max_size, text_errors, errors,
+    (errorsArray, msg) => {
+      textState.errors = errorsArray;
+      textState.error_message = msg;
+      if (msg.length > 0) return true;
+      return false;
+    });
+  if (maxError) return { ...textState };
 
   textState.value = currentValue;
-  textState.toWrite = toWrite;
+  textState.to_write = toWrite;
 
-  if (toWrite > max_size - min_size) {
-    const { min_size: min } = text_errors;
-    const msg = `${min.message}${min_size}.`;
-    errors = [...errors, min.error];
-    const error = setStandarError(textState, errors, msg);
-    return { ...error };
-  }
+  minSizeValidation(toWrite, max_size, min_size, text_errors, textState.errors,
+    (errorsArray, msg) => {
+      textState.errors = errorsArray;
+      if (errorsArray.length > 0 && msg !== '') textState.error_message = msg;
+    });
 
-  return {
-    ...textState, errors: [], error_message: '',
-  };
+  return { ...textState };
 }
 
 export default text;
