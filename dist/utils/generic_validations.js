@@ -1,16 +1,22 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isNotNumberValidation = exports.isNumber = exports.patternMatchValidation = exports.minSizeValidation = exports.maxSizeValidation = undefined;
+exports.maxSizeValidation = maxSizeValidation;
+exports.minSizeValidation = minSizeValidation;
+exports.patternMatchValidation = patternMatchValidation;
+exports.isNumber = isNumber;
+exports.isNotNumberValidation = isNotNumberValidation;
 
-var _error = require('./error');
+var _error = require("./error");
 
 function maxSizeValidation(toWrite, maxSize, errorCodes, currentErrors, callback) {
   var sizeError = (0, _error.createMaxSizeError)(errorCodes, maxSize);
+
   if (toWrite + 1 === 0) {
     var _errors = (0, _error.setStandarError)(currentErrors, sizeError.error);
+
     return callback(_errors, sizeError.message);
   }
 
@@ -20,8 +26,10 @@ function maxSizeValidation(toWrite, maxSize, errorCodes, currentErrors, callback
 
 function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors, callback) {
   var sizeError = (0, _error.createMinSizeError)(errorCodes, minSize);
+
   if (toWrite > maxSize - minSize) {
     var _errors2 = (0, _error.setStandarError)(currentErrors, sizeError.error);
+
     return callback(_errors2, sizeError.message);
   }
 
@@ -34,6 +42,7 @@ function patternMatchValidation(pattern, value, errorCodes, currentErrors, callb
 
   if (!pattern.test(value)) {
     var _errors3 = (0, _error.setStandarError)(currentErrors, notMatch.error);
+
     return callback(_errors3, notMatch.message);
   }
 
@@ -51,15 +60,10 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
 
   if (!isNum) {
     var _errors4 = (0, _error.setStandarError)(currentErrors, notNumber.error);
+
     return callback(_errors4, notNumber.message);
   }
 
   var errors = (0, _error.removeStandarError)(currentErrors, notNumber.error);
   return callback(errors, '');
 }
-
-exports.maxSizeValidation = maxSizeValidation;
-exports.minSizeValidation = minSizeValidation;
-exports.patternMatchValidation = patternMatchValidation;
-exports.isNumber = isNumber;
-exports.isNotNumberValidation = isNotNumberValidation;
