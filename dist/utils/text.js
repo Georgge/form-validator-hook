@@ -16,32 +16,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function text(currentValue, state, name) {
   var textState = state[name];
-  var text_errors = _errors2.default.text_errors;
+  var textErrors = _errors2.default.textErrors;
   var rules = textState.rules,
       _textState$errors = textState.errors,
       errors = _textState$errors === undefined ? [] : _textState$errors;
-  var _rules$max_size = rules.max_size,
-      max_size = _rules$max_size === undefined ? 100 : _rules$max_size,
-      _rules$min_size = rules.min_size,
-      min_size = _rules$min_size === undefined ? 0 : _rules$min_size;
+  var _rules$maxSize = rules.maxSize,
+      maxSize = _rules$maxSize === undefined ? 100 : _rules$maxSize,
+      _rules$minSize = rules.minSize,
+      minSize = _rules$minSize === undefined ? 0 : _rules$minSize;
 
 
-  var toWrite = max_size - ('' + currentValue).length;
+  var toWrite = maxSize - ('' + currentValue).length;
 
-  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, max_size, text_errors, errors, function (errorsArray, msg) {
+  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, maxSize, textErrors, errors, function (errorsArray, msg) {
     textState.errors = errorsArray;
-    textState.error_message = msg;
+    textState.errorMessage = msg;
     if (msg.length > 0) return true;
     return false;
   });
   if (maxError) return _extends({}, textState);
 
   textState.value = currentValue;
-  textState.to_write = toWrite;
+  textState.toWrite = toWrite;
 
-  (0, _generic_validations.minSizeValidation)(toWrite, max_size, min_size, text_errors, textState.errors, function (errorsArray, msg) {
+  (0, _generic_validations.minSizeValidation)(toWrite, maxSize, minSize, textErrors, textState.errors, function (errorsArray, msg) {
     textState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') textState.error_message = msg;
+    if (errorsArray.length > 0 && msg !== '') textState.errorMessage = msg;
   });
 
   return _extends({}, textState);

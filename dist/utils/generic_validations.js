@@ -30,14 +30,14 @@ function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors,
 }
 
 function patternMatchValidation(pattern, value, errorCodes, currentErrors, callback) {
-  var not_match = errorCodes.not_match;
+  var notMatch = errorCodes.notMatch;
 
   if (!pattern.test(value)) {
-    var _errors3 = (0, _error.setStandarError)(currentErrors, not_match.error);
-    return callback(_errors3, not_match.message);
+    var _errors3 = (0, _error.setStandarError)(currentErrors, notMatch.error);
+    return callback(_errors3, notMatch.message);
   }
 
-  var errors = (0, _error.removeStandarError)(currentErrors, not_match.error);
+  var errors = (0, _error.removeStandarError)(currentErrors, notMatch.error);
   return callback(errors, '');
 }
 
@@ -47,14 +47,14 @@ function isNumber(value) {
 
 function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   var isNum = isNumber(value);
-  var not_number = errorCodes.not_number;
+  var notNumber = errorCodes.notNumber;
 
   if (!isNum) {
-    var _errors4 = (0, _error.setStandarError)(currentErrors, not_number.error);
-    return callback(_errors4, not_number.message);
+    var _errors4 = (0, _error.setStandarError)(currentErrors, notNumber.error);
+    return callback(_errors4, notNumber.message);
   }
 
-  var errors = (0, _error.removeStandarError)(currentErrors, not_number.error);
+  var errors = (0, _error.removeStandarError)(currentErrors, notNumber.error);
   return callback(errors, '');
 }
 

@@ -22,8 +22,8 @@ function App() {
       value: '',
       type: 'text',
       rules: {
-        max_size: 20,
-        min_size: 5,
+        maxSize: 20,
+        minSize: 5,
       },
     },
     pattern: {
@@ -32,9 +32,8 @@ function App() {
       type: 'pattern',
       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       rules: {
-        max_size: 10,
-        min_size: 5,
-        clear_max_size_error: true,
+        maxSize: 10,
+        minSize: 5,
       },
     },
   });
@@ -54,17 +53,17 @@ function App() {
         <div>
           <label>Numero</label>
           <input name="number" onChange={handleChange} value={number.value} />
-          <div>{ number.error_message }</div>
+          <div>{ number.errorMessage }</div>
         </div>
         <div>
           <label>Texto</label>
           <input type="text" name="text" onChange={handleChange} value={text.value} />
-          <div>{ text.error_message }</div>
+          <div>{ text.errorMessage }</div>
         </div>
         <div>
           <label>Pattern</label>
           <input type="text" name="pattern" onChange={handleChange} value={pattern.value} />
-          <div>{ pattern.error_message }</div>
+          <div>{ pattern.errorMessage }</div>
         </div>
       </form>
     </div>

@@ -29,13 +29,13 @@ function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors,
 
 
 function patternMatchValidation(pattern, value, errorCodes, currentErrors, callback) {
-  const { not_match } = errorCodes;
+  const { notMatch } = errorCodes;
   if (!pattern.test(value)) {
-    const errors = setStandarError(currentErrors, not_match.error);
-    return callback(errors, not_match.message);
+    const errors = setStandarError(currentErrors, notMatch.error);
+    return callback(errors, notMatch.message);
   }
 
-  const errors = removeStandarError(currentErrors, not_match.error);
+  const errors = removeStandarError(currentErrors, notMatch.error);
   return callback(errors, '');
 }
 
@@ -45,13 +45,13 @@ function isNumber(value) {
 
 function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   const isNum = isNumber(value);
-  const { not_number } = errorCodes;
+  const { notNumber } = errorCodes;
   if (!isNum) {
-    const errors = setStandarError(currentErrors, not_number.error);
-    return callback(errors, not_number.message);
+    const errors = setStandarError(currentErrors, notNumber.error);
+    return callback(errors, notNumber.message);
   }
 
-  const errors = removeStandarError(currentErrors, not_number.error);
+  const errors = removeStandarError(currentErrors, notNumber.error);
   return callback(errors, '');
 }
 

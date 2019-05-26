@@ -1,50 +1,50 @@
 {
-  "number_errors": {
-    "not_number": {
+  "numberErrors": {
+    "notNumber": {
       "error": "isNotANumber",
       "message": "You can write only numbers."
     },
-    "not_integer": {
+    "notInteger": {
       "error": "isNotAInteger",
       "message": "You can write only integer numbers."
     },
-    "invalid_format": {
+    "invalidFormat": {
       "error": "invalidFormatDeclared",
       "message": "The format declared for the number in the state is invalid. For valid format use 'int' or 'float'"
     },
-    "max_size": {
+    "maxSize": {
       "error": "maxSize",
       "message": "The max number of characters is "
     },
-    "min_size": {
+    "minSize": {
       "error": "minSize",
       "message": "The min number of characters is "
     }
   },
-  "text_errors": {
-    "max_size": {
+  "textErrors": {
+    "maxSize": {
       "error": "maxSize",
       "message": "The max numbers of characters is "
     },
-    "min_size": {
+    "minSize": {
       "error": "minSize",
       "message": "The min number of characters is "
     }
   },
-  "pattern_errors": {
-    "not_pattern": {
+  "patternErrors": {
+    "notPattern": {
       "error": "notPattern",
       "message": "The pattern is not defined in the state."
     },
-    "not_match": {
+    "notMatch": {
       "error": "patternNotMatch",
       "message": "The current value does not match with the pattern."
     },
-    "max_size": {
+    "maxSize": {
       "error": "maxSize",
       "message": "The max numbers of characters is "
     },
-    "min_size": {
+    "minSize": {
       "error": "minSize",
       "message": "The min number of characters is "
     }

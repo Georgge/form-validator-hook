@@ -14,18 +14,18 @@ function removeStandarError(currentErrros, desiredError) {
 
 function createMaxSizeError(Errors, size) {
   const errorSize = {};
-  const { max_size } = Errors;
-  errorSize.message = `${max_size.message}${size}`;
-  errorSize.error = max_size.error;
+  const { maxSize } = Errors;
+  errorSize.message = `${maxSize.message}${size}`;
+  errorSize.error = maxSize.error;
 
   return errorSize;
 }
 
 function createMinSizeError(Errors, size) {
   const errorSize = {};
-  const { min_size } = Errors;
-  errorSize.message = `${min_size.message}${size}`;
-  errorSize.error = min_size.error;
+  const { minSize } = Errors;
+  errorSize.message = `${minSize.message}${size}`;
+  errorSize.error = minSize.error;
 
   return errorSize;
 }

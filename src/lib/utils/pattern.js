@@ -5,24 +5,24 @@ import {
 
 function pattern(currentValue, state, name) {
   const patternState = state[name];
-  const { pattern_errors } = Errors;
+  const { patternErrors } = Errors;
   const { pattern: pttrn, rules, errors = [] } = patternState;
   const {
-    max_size = 100,
-    min_size = 0,
+    maxSize = 100,
+    minSize = 0,
   } = rules;
 
-  const toWrite = max_size - `${currentValue}`.length;
+  const toWrite = maxSize - `${currentValue}`.length;
 
   if (pttrn === '' || pttrn === undefined) {
-    const { not_pattern } = pattern_errors;
-    throw new Error(`${not_pattern.error} ${not_pattern.message}`);
+    const { notPattern } = patternErrors;
+    throw new Error(`${notPattern.error} ${notPattern.message}`);
   }
 
-  const maxError = maxSizeValidation(toWrite, max_size, pattern_errors, errors,
+  const maxError = maxSizeValidation(toWrite, maxSize, patternErrors, errors,
     (errorsArray, msg) => {
       patternState.errors = errorsArray;
-      patternState.error_message = msg;
+      patternState.errorMessage = msg;
       if (msg.length > 0) return true;
       return false;
     });
@@ -31,18 +31,18 @@ function pattern(currentValue, state, name) {
 
   // Current value is setting in state
   patternState.value = currentValue;
-  patternState.to_write = toWrite;
+  patternState.toWrite = toWrite;
 
-  patternMatchValidation(pttrn, currentValue, pattern_errors, patternState.errors,
+  patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors,
     (errorsArray, msg) => {
       patternState.errors = errorsArray;
-      if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+      if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
     });
 
-  minSizeValidation(toWrite, max_size, min_size, pattern_errors, patternState.errors,
+  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors,
     (errorsArray, msg) => {
       patternState.errors = errorsArray;
-      if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+      if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
     });
 
   return { ...patternState };

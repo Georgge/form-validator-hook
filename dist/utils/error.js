@@ -24,20 +24,20 @@ function removeStandarError(currentErrros, desiredError) {
 
 function createMaxSizeError(Errors, size) {
   var errorSize = {};
-  var max_size = Errors.max_size;
+  var maxSize = Errors.maxSize;
 
-  errorSize.message = "" + max_size.message + size;
-  errorSize.error = max_size.error;
+  errorSize.message = "" + maxSize.message + size;
+  errorSize.error = maxSize.error;
 
   return errorSize;
 }
 
 function createMinSizeError(Errors, size) {
   var errorSize = {};
-  var min_size = Errors.min_size;
+  var minSize = Errors.minSize;
 
-  errorSize.message = "" + min_size.message + size;
-  errorSize.error = min_size.error;
+  errorSize.message = "" + minSize.message + size;
+  errorSize.error = minSize.error;
 
   return errorSize;
 }

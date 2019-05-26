@@ -17,7 +17,7 @@ var _generic_validations = require('./generic_validations');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function number(currentValue, state, name) {
-  var number_errors = _errors2.default.number_errors;
+  var numberErrors = _errors2.default.numberErrors;
 
   var numberState = state[name];
   var rules = numberState.rules,
@@ -25,62 +25,62 @@ function number(currentValue, state, name) {
       errors = _numberState$errors === undefined ? [] : _numberState$errors;
   var _rules$format = rules.format,
       format = _rules$format === undefined ? 'int' : _rules$format,
-      _rules$max_size = rules.max_size,
-      max_size = _rules$max_size === undefined ? 7 : _rules$max_size,
-      _rules$min_size = rules.min_size,
-      min_size = _rules$min_size === undefined ? 5 : _rules$min_size,
-      _rules$enforce_zero = rules.enforce_zero,
-      enforce_zero = _rules$enforce_zero === undefined ? false : _rules$enforce_zero;
+      _rules$maxSize = rules.maxSize,
+      maxSize = _rules$maxSize === undefined ? 7 : _rules$maxSize,
+      _rules$minSize = rules.minSize,
+      minSize = _rules$minSize === undefined ? 5 : _rules$minSize,
+      _rules$enforceZero = rules.enforceZero,
+      enforceZero = _rules$enforceZero === undefined ? false : _rules$enforceZero;
 
 
-  var toWrite = max_size - ('' + currentValue).length;
+  var toWrite = maxSize - ('' + currentValue).length;
   var writeDot = false;
 
-  var isNotNumber = (0, _generic_validations.isNotNumberValidation)(currentValue, number_errors, errors, function (errorsArray, msg) {
+  var isNotNumber = (0, _generic_validations.isNotNumberValidation)(currentValue, numberErrors, errors, function (errorsArray, msg) {
     numberState.errors = errorsArray;
-    numberState.error_message = msg;
+    numberState.errorMessage = msg;
     if (msg.length > 0) return true;
     return false;
   });
   if (isNotNumber) return _extends({}, numberState);
 
-  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, max_size, number_errors, errors, function (errorsArray, msg) {
+  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, maxSize, numberErrors, errors, function (errorsArray, msg) {
     numberState.errors = errorsArray;
-    numberState.error_message = msg;
+    numberState.errorMessage = msg;
     if (msg.length > 0) return true;
     return false;
   });
   if (maxError) return _extends({}, numberState);
 
   if (format === 'float' || format === 'int') {
-    var not_integer = number_errors.not_integer;
+    var notInteger = numberErrors.notInteger;
 
 
     if (currentValue.includes('.') && format === 'int') {
-      var errs = (0, _error.setStandarError)(errors, not_integer.error);
+      var errs = (0, _error.setStandarError)(errors, notInteger.error);
       numberState.errors = errs;
-      numberState.error_message = not_integer.msg;
+      numberState.errorMessage = notInteger.msg;
       return _extends({}, numberState);
     }
 
     if (currentValue[currentValue.length - 1] === '.') writeDot = !writeDot;
   } else {
-    var invalid_format = number_errors.invalid_format;
+    var invalidFormat = numberErrors.invalidFormat;
 
-    throw new Error(invalid_format.error + ' -> ' + invalid_format.message);
+    throw new Error(invalidFormat.error + ' -> ' + invalidFormat.message);
   }
 
   var virtualValue = currentValue;
   if (!writeDot && currentValue !== '') virtualValue = Number(currentValue);
-  if (currentValue === '' && enforce_zero) virtualValue = Number(currentValue);
-  if (currentValue === '' && !enforce_zero) virtualValue = '';
+  if (currentValue === '' && enforceZero) virtualValue = Number(currentValue);
+  if (currentValue === '' && !enforceZero) virtualValue = '';
 
   numberState.value = virtualValue;
-  numberState.to_write = toWrite;
+  numberState.toWrite = toWrite;
 
-  (0, _generic_validations.minSizeValidation)(toWrite, max_size, min_size, number_errors, numberState.errors, function (arrayErrors, msg) {
+  (0, _generic_validations.minSizeValidation)(toWrite, maxSize, minSize, numberErrors, numberState.errors, function (arrayErrors, msg) {
     numberState.errors = arrayErrors;
-    numberState.error_message = msg;
+    numberState.errorMessage = msg;
   });
 
   return _extends({}, numberState);

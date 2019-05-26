@@ -6,66 +6,66 @@ import {
 } from './generic_validations';
 
 function number(currentValue, state, name) {
-  const { number_errors } = Errors;
+  const { numberErrors } = Errors;
   const numberState = state[name];
   const { rules, errors = [] } = numberState;
   const {
     format = 'int',
-    max_size = 7,
-    min_size = 5,
-    enforce_zero = false,
+    maxSize = 7,
+    minSize = 5,
+    enforceZero = false,
   } = rules;
 
-  const toWrite = max_size - `${currentValue}`.length;
+  const toWrite = maxSize - `${currentValue}`.length;
   let writeDot = false;
 
 
-  const isNotNumber = isNotNumberValidation(currentValue, number_errors, errors,
+  const isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors,
     (errorsArray, msg) => {
       numberState.errors = errorsArray;
-      numberState.error_message = msg;
+      numberState.errorMessage = msg;
       if (msg.length > 0) return true;
       return false;
     });
   if (isNotNumber) return { ...numberState };
 
-  const maxError = maxSizeValidation(toWrite, max_size, number_errors, errors,
+  const maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors,
     (errorsArray, msg) => {
       numberState.errors = errorsArray;
-      numberState.error_message = msg;
+      numberState.errorMessage = msg;
       if (msg.length > 0) return true;
       return false;
     });
   if (maxError) return { ...numberState };
 
   if (format === 'float' || format === 'int') {
-    const { not_integer } = number_errors;
+    const { notInteger } = numberErrors;
 
     if (currentValue.includes('.') && format === 'int') {
-      const errs = setStandarError(errors, not_integer.error);
+      const errs = setStandarError(errors, notInteger.error);
       numberState.errors = errs;
-      numberState.error_message = not_integer.msg;
+      numberState.errorMessage = notInteger.msg;
       return { ...numberState };
     }
 
     if (currentValue[currentValue.length - 1] === '.') writeDot = !writeDot;
   } else {
-    const { invalid_format } = number_errors;
-    throw new Error(`${invalid_format.error} -> ${invalid_format.message}`);
+    const { invalidFormat } = numberErrors;
+    throw new Error(`${invalidFormat.error} -> ${invalidFormat.message}`);
   }
 
   let virtualValue = currentValue;
   if (!writeDot && currentValue !== '') virtualValue = Number(currentValue);
-  if (currentValue === '' && enforce_zero) virtualValue = Number(currentValue);
-  if (currentValue === '' && !enforce_zero) virtualValue = '';
+  if (currentValue === '' && enforceZero) virtualValue = Number(currentValue);
+  if (currentValue === '' && !enforceZero) virtualValue = '';
 
   numberState.value = virtualValue;
-  numberState.to_write = toWrite;
+  numberState.toWrite = toWrite;
 
-  minSizeValidation(toWrite, max_size, min_size, number_errors, numberState.errors,
+  minSizeValidation(toWrite, maxSize, minSize, numberErrors, numberState.errors,
     (arrayErrors, msg) => {
       numberState.errors = arrayErrors;
-      numberState.error_message = msg;
+      numberState.errorMessage = msg;
     });
 
   return { ...numberState };

@@ -16,28 +16,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function pattern(currentValue, state, name) {
   var patternState = state[name];
-  var pattern_errors = _errors2.default.pattern_errors;
+  var patternErrors = _errors2.default.patternErrors;
   var pttrn = patternState.pattern,
       rules = patternState.rules,
       _patternState$errors = patternState.errors,
       errors = _patternState$errors === undefined ? [] : _patternState$errors;
-  var _rules$max_size = rules.max_size,
-      max_size = _rules$max_size === undefined ? 100 : _rules$max_size,
-      _rules$min_size = rules.min_size,
-      min_size = _rules$min_size === undefined ? 0 : _rules$min_size;
+  var _rules$maxSize = rules.maxSize,
+      maxSize = _rules$maxSize === undefined ? 100 : _rules$maxSize,
+      _rules$minSize = rules.minSize,
+      minSize = _rules$minSize === undefined ? 0 : _rules$minSize;
 
 
-  var toWrite = max_size - ('' + currentValue).length;
+  var toWrite = maxSize - ('' + currentValue).length;
 
   if (pttrn === '' || pttrn === undefined) {
-    var not_pattern = pattern_errors.not_pattern;
+    var notPattern = patternErrors.notPattern;
 
-    throw new Error(not_pattern.error + ' ' + not_pattern.message);
+    throw new Error(notPattern.error + ' ' + notPattern.message);
   }
 
-  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, max_size, pattern_errors, errors, function (errorsArray, msg) {
+  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, maxSize, patternErrors, errors, function (errorsArray, msg) {
     patternState.errors = errorsArray;
-    patternState.error_message = msg;
+    patternState.errorMessage = msg;
     if (msg.length > 0) return true;
     return false;
   });
@@ -45,16 +45,16 @@ function pattern(currentValue, state, name) {
 
   // Current value is setting in state
   patternState.value = currentValue;
-  patternState.to_write = toWrite;
+  patternState.toWrite = toWrite;
 
-  (0, _generic_validations.patternMatchValidation)(pttrn, currentValue, pattern_errors, patternState.errors, function (errorsArray, msg) {
+  (0, _generic_validations.patternMatchValidation)(pttrn, currentValue, patternErrors, patternState.errors, function (errorsArray, msg) {
     patternState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+    if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
   });
 
-  (0, _generic_validations.minSizeValidation)(toWrite, max_size, min_size, pattern_errors, patternState.errors, function (errorsArray, msg) {
+  (0, _generic_validations.minSizeValidation)(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (errorsArray, msg) {
     patternState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') patternState.error_message = msg;
+    if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
   });
 
   return _extends({}, patternState);
