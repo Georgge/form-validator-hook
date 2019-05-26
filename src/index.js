@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 
-import { useFormValidator } from './lib';
+import useFormValidator from './lib';
 
 function App() {
   const { changeValidator } = useFormValidator();
