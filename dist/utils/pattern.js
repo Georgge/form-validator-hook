@@ -1,23 +1,10 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _errors = _interopRequireDefault(require("./errors.json"));
-
-var _generic_validations = require("./generic_validations");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
+import Errors from './errors.json';
+import { maxSizeValidation, minSizeValidation, patternMatchValidation } from './generic_validations';
 
 function pattern(currentValue, state, name) {
   var patternState = state[name];
-  var patternErrors = _errors.default.patternErrors;
+  var patternErrors = Errors.patternErrors;
   var pttrn = patternState.pattern,
       rules = patternState.rules,
       _patternState$errors = patternState.errors,
@@ -33,7 +20,7 @@ function pattern(currentValue, state, name) {
     throw new Error("".concat(notPattern.error, " ").concat(notPattern.message));
   }
 
-  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, maxSize, patternErrors, errors, function (errorsArray, msg) {
+  var maxError = maxSizeValidation(toWrite, maxSize, patternErrors, errors, function (errorsArray, msg) {
     patternState.errors = errorsArray;
     patternState.errorMessage = msg;
     if (msg.length > 0) return true;
@@ -43,16 +30,15 @@ function pattern(currentValue, state, name) {
 
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
-  (0, _generic_validations.patternMatchValidation)(pttrn, currentValue, patternErrors, patternState.errors, function (errorsArray, msg) {
+  patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors, function (errorsArray, msg) {
     patternState.errors = errorsArray;
     if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
   });
-  (0, _generic_validations.minSizeValidation)(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (errorsArray, msg) {
+  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (errorsArray, msg) {
     patternState.errors = errorsArray;
     if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
   });
   return _objectSpread({}, patternState);
 }
 
-var _default = pattern;
-exports.default = _default;
+export default pattern;

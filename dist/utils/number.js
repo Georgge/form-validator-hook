@@ -1,24 +1,10 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _errors = _interopRequireDefault(require("./errors.json"));
-
-var _error = require("./error");
-
-var _generic_validations = require("./generic_validations");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
+import Errors from './errors.json';
+import { setStandarError } from './error';
+import { maxSizeValidation, minSizeValidation, isNotNumberValidation } from './generic_validations';
 
 function number(currentValue, state, name) {
-  var numberErrors = _errors.default.numberErrors;
+  var numberErrors = Errors.numberErrors;
   var numberState = state[name];
   var rules = numberState.rules,
       _numberState$errors = numberState.errors,
@@ -33,14 +19,14 @@ function number(currentValue, state, name) {
       enforceZero = _rules$enforceZero === void 0 ? false : _rules$enforceZero;
   var toWrite = maxSize - "".concat(currentValue).length;
   var writeDot = false;
-  var isNotNumber = (0, _generic_validations.isNotNumberValidation)(currentValue, numberErrors, errors, function (errorsArray, msg) {
+  var isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors, function (errorsArray, msg) {
     numberState.errors = errorsArray;
     numberState.errorMessage = msg;
     if (msg.length > 0) return true;
     return false;
   });
   if (isNotNumber) return _objectSpread({}, numberState);
-  var maxError = (0, _generic_validations.maxSizeValidation)(toWrite, maxSize, numberErrors, errors, function (errorsArray, msg) {
+  var maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors, function (errorsArray, msg) {
     numberState.errors = errorsArray;
     numberState.errorMessage = msg;
     if (msg.length > 0) return true;
@@ -52,7 +38,7 @@ function number(currentValue, state, name) {
     var notInteger = numberErrors.notInteger;
 
     if (currentValue.includes('.') && format === 'int') {
-      var errs = (0, _error.setStandarError)(errors, notInteger.error);
+      var errs = setStandarError(errors, notInteger.error);
       numberState.errors = errs;
       numberState.errorMessage = notInteger.msg;
       return _objectSpread({}, numberState);
@@ -70,12 +56,11 @@ function number(currentValue, state, name) {
   if (currentValue === '' && !enforceZero) virtualValue = '';
   numberState.value = virtualValue;
   numberState.toWrite = toWrite;
-  (0, _generic_validations.minSizeValidation)(toWrite, maxSize, minSize, numberErrors, numberState.errors, function (arrayErrors, msg) {
+  minSizeValidation(toWrite, maxSize, minSize, numberErrors, numberState.errors, function (arrayErrors, msg) {
     numberState.errors = arrayErrors;
     numberState.errorMessage = msg;
   });
   return _objectSpread({}, numberState);
 }
 
-var _default = number;
-exports.default = _default;
+export default number;

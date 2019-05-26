@@ -1,39 +1,28 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.maxSizeValidation = maxSizeValidation;
-exports.minSizeValidation = minSizeValidation;
-exports.patternMatchValidation = patternMatchValidation;
-exports.isNumber = isNumber;
-exports.isNotNumberValidation = isNotNumberValidation;
-
-var _error = require("./error");
+import { createMaxSizeError, createMinSizeError, setStandarError, removeStandarError } from './error';
 
 function maxSizeValidation(toWrite, maxSize, errorCodes, currentErrors, callback) {
-  var sizeError = (0, _error.createMaxSizeError)(errorCodes, maxSize);
+  var sizeError = createMaxSizeError(errorCodes, maxSize);
 
   if (toWrite + 1 === 0) {
-    var _errors = (0, _error.setStandarError)(currentErrors, sizeError.error);
+    var _errors = setStandarError(currentErrors, sizeError.error);
 
     return callback(_errors, sizeError.message);
   }
 
-  var errors = (0, _error.removeStandarError)(currentErrors, sizeError.error);
+  var errors = removeStandarError(currentErrors, sizeError.error);
   return callback(errors, '');
 }
 
 function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors, callback) {
-  var sizeError = (0, _error.createMinSizeError)(errorCodes, minSize);
+  var sizeError = createMinSizeError(errorCodes, minSize);
 
   if (toWrite > maxSize - minSize) {
-    var _errors2 = (0, _error.setStandarError)(currentErrors, sizeError.error);
+    var _errors2 = setStandarError(currentErrors, sizeError.error);
 
     return callback(_errors2, sizeError.message);
   }
 
-  var errors = (0, _error.removeStandarError)(currentErrors, sizeError.error);
+  var errors = removeStandarError(currentErrors, sizeError.error);
   return callback(errors, '');
 }
 
@@ -41,12 +30,12 @@ function patternMatchValidation(pattern, value, errorCodes, currentErrors, callb
   var notMatch = errorCodes.notMatch;
 
   if (!pattern.test(value)) {
-    var _errors3 = (0, _error.setStandarError)(currentErrors, notMatch.error);
+    var _errors3 = setStandarError(currentErrors, notMatch.error);
 
     return callback(_errors3, notMatch.message);
   }
 
-  var errors = (0, _error.removeStandarError)(currentErrors, notMatch.error);
+  var errors = removeStandarError(currentErrors, notMatch.error);
   return callback(errors, '');
 }
 
@@ -59,11 +48,13 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   var notNumber = errorCodes.notNumber;
 
   if (!isNum) {
-    var _errors4 = (0, _error.setStandarError)(currentErrors, notNumber.error);
+    var _errors4 = setStandarError(currentErrors, notNumber.error);
 
     return callback(_errors4, notNumber.message);
   }
 
-  var errors = (0, _error.removeStandarError)(currentErrors, notNumber.error);
+  var errors = removeStandarError(currentErrors, notNumber.error);
   return callback(errors, '');
 }
+
+export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation };
