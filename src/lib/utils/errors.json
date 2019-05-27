@@ -1,4 +1,10 @@
 {
+  "formErrors": {
+    "requiredFields": {
+      "error": "requiredFieldsAreEmpty",
+      "message": "The mark fields like required should be not empty."
+    }
+  },
   "numberErrors": {
     "notNumber": {
       "error": "isNotANumber",

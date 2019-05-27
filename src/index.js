@@ -6,9 +6,9 @@ import { render } from 'react-dom';
 import useFormValidator from './lib';
 
 function App() {
-  const { changeValidator } = useFormValidator();
+  const { typeValidator, requiredValidator } = useFormValidator();
   const [state, setState] = useState({
-    form_valid: false,
+    valid: false,
     number: {
       valid: true,
       value: '',
@@ -28,6 +28,7 @@ function App() {
     },
     pattern: {
       valid: true,
+      required: true,
       value: '',
       type: 'pattern',
       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -38,10 +39,18 @@ function App() {
     },
   });
 
+  console.log(state);
 
   const handleChange = (e) => {
     const { target } = e;
-    const status = changeValidator(target, state);
+    const status = typeValidator(target, state);
+    setState(status);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { target } = e;
+    const status = requiredValidator(target, state);
     setState(status);
   };
 
@@ -49,7 +58,7 @@ function App() {
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Numero</label>
           <input name="number" onChange={handleChange} value={number.value} />
@@ -64,6 +73,9 @@ function App() {
           <label>Pattern</label>
           <input type="text" name="pattern" onChange={handleChange} value={pattern.value} />
           <div>{ pattern.errorMessage }</div>
+        </div>
+        <div>
+          <button type="submit">Validate</button>
         </div>
       </form>
     </div>

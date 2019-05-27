@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import {
   createMaxSizeError, createMinSizeError, setStandarError,
   removeStandarError,
@@ -55,6 +56,36 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   return callback(errors, '');
 }
 
+function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, callback) {
+  // eslint-disable-next-line consistent-return
+  const validArray = [...inputFields].map((field) => {
+    const { name, value } = field;
+    const currentField = state[name];
+
+    if (currentField) {
+      if (currentField.required && currentField.required === true) {
+        if (`${value}`.length > 0) return true;
+        return false;
+      }
+      return 'notRequired';
+    }
+    return 'fieldNotDefinedInState';
+  });
+
+  const validReduceArray = validArray.filter((item, index) => (
+    validArray.indexOf(item) === index
+  ));
+
+  const errors = setStandarError(currentErrors, errorCodes.error);
+  if (validReduceArray.includes(false)) return callback(false, errors, errorCodes.message);
+
+  const notErrors = removeStandarError(currentErrors, errorCodes.error);
+  // if (validReduceArray.length === 1 && validReduceArray[0] === 'notRequired') {
+  //   return callback(true);
+  // }
+  return callback(true, notErrors);
+}
+
 
 export {
   maxSizeValidation,
@@ -62,4 +93,5 @@ export {
   patternMatchValidation,
   isNumber,
   isNotNumberValidation,
+  hasRequiredValidation,
 };
