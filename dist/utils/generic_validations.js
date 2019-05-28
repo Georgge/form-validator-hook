@@ -1,3 +1,6 @@
+import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
+
+/* eslint-disable array-callback-return */
 import { createMaxSizeError, createMinSizeError, setStandarError, removeStandarError } from './error';
 
 function maxSizeValidation(toWrite, maxSize, errorCodes, currentErrors, callback) {
@@ -57,4 +60,35 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   return callback(errors, '');
 }
 
-export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation };
+function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, callback) {
+  // eslint-disable-next-line consistent-return
+  var validArray = _toConsumableArray(inputFields).map(function (field) {
+    var name = field.name,
+        value = field.value;
+    var currentField = state[name];
+
+    if (currentField) {
+      if (currentField.required && currentField.required === true) {
+        if ("".concat(value).length > 0) return true;
+        return false;
+      }
+
+      return 'notRequired';
+    }
+
+    return 'fieldNotDefinedInState';
+  });
+
+  var validReduceArray = validArray.filter(function (item, index) {
+    return validArray.indexOf(item) === index;
+  });
+  var errors = setStandarError(currentErrors, errorCodes.error);
+  if (validReduceArray.includes(false)) return callback(false, errors, errorCodes.message);
+  var notErrors = removeStandarError(currentErrors, errorCodes.error); // if (validReduceArray.length === 1 && validReduceArray[0] === 'notRequired') {
+  //   return callback(true);
+  // }
+
+  return callback(true, notErrors);
+}
+
+export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation, hasRequiredValidation };

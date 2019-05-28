@@ -60,17 +60,17 @@ function App() {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Numero</label>
+          <label>Number</label>
           <input name="number" onChange={handleChange} value={number.value} />
           <div>{ number.errorMessage }</div>
         </div>
         <div>
-          <label>Texto</label>
+          <label>Text</label>
           <input type="text" name="text" onChange={handleChange} value={text.value} />
           <div>{ text.errorMessage }</div>
         </div>
         <div>
-          <label>Pattern</label>
+          <label>Pattern (email example)</label>
           <input type="text" name="pattern" onChange={handleChange} value={pattern.value} />
           <div>{ pattern.errorMessage }</div>
         </div>
