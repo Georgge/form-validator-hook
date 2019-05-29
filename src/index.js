@@ -19,6 +19,7 @@ function App() {
     },
     text: {
       valid: true,
+      required: true,
       value: '',
       type: 'text',
       rules: {
@@ -33,8 +34,8 @@ function App() {
       type: 'pattern',
       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       rules: {
-        maxSize: 10,
-        minSize: 5,
+        maxSize: 20,
+        minSize: 10,
       },
     },
   });
@@ -59,6 +60,11 @@ function App() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <div>
+          Valid form:
+          { `${state.valid}` }
+          <div>{ state.errorMessage }</div>
+        </div>
         <div>
           <label>Number</label>
           <input name="number" onChange={handleChange} value={number.value} />

@@ -14,16 +14,22 @@ function pattern(currentValue, state, name) {
 
   const toWrite = maxSize - `${currentValue}`.length;
 
+  patternState.valid = true;
+  patternState.errorMessage = '';
+
   if (pttrn === '' || pttrn === undefined) {
     const { notPattern } = patternErrors;
     throw new Error(`${notPattern.error} ${notPattern.message}`);
   }
 
   const maxError = maxSizeValidation(toWrite, maxSize, patternErrors, errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
       patternState.errors = errorsArray;
-      patternState.errorMessage = msg;
-      if (msg.length > 0) return true;
+      if (msg) {
+        patternState.valid = valid;
+        patternState.errorMessage = msg;
+        return true;
+      }
       return false;
     });
   if (maxError) return { ...patternState };
@@ -34,15 +40,21 @@ function pattern(currentValue, state, name) {
   patternState.toWrite = toWrite;
 
   patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
       patternState.errors = errorsArray;
-      if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
+      if (msg) {
+        patternState.valid = valid;
+        patternState.errorMessage = msg;
+      }
     });
 
   minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
       patternState.errors = errorsArray;
-      if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
+      if (msg) {
+        patternState.valid = valid;
+        patternState.errorMessage = msg;
+      }
     });
 
   return { ...patternState };

@@ -12,11 +12,16 @@ function text(currentValue, state, name) {
 
   const toWrite = maxSize - `${currentValue}`.length;
 
+  textState.errorMessage = '';
+
   const maxError = maxSizeValidation(toWrite, maxSize, textErrors, errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
+      textState.valid = valid;
       textState.errors = errorsArray;
-      textState.errorMessage = msg;
-      if (msg.length > 0) return true;
+      if (msg) {
+        textState.errorMessage = msg;
+        return true;
+      }
       return false;
     });
   if (maxError) return { ...textState };
@@ -25,9 +30,10 @@ function text(currentValue, state, name) {
   textState.toWrite = toWrite;
 
   minSizeValidation(toWrite, maxSize, minSize, textErrors, textState.errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
+      textState.valid = valid;
       textState.errors = errorsArray;
-      if (errorsArray.length > 0 && msg !== '') textState.errorMessage = msg;
+      if (msg) textState.errorMessage = msg;
     });
 
   return { ...textState };

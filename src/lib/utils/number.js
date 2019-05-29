@@ -19,21 +19,30 @@ function number(currentValue, state, name) {
   const toWrite = maxSize - `${currentValue}`.length;
   let writeDot = false;
 
+  numberState.valid = true;
+  numberState.errorMessage = '';
+
 
   const isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
       numberState.errors = errorsArray;
-      numberState.errorMessage = msg;
-      if (msg.length > 0) return true;
+      if (msg) {
+        numberState.valid = valid;
+        numberState.errorMessage = msg;
+        return true;
+      }
       return false;
     });
   if (isNotNumber) return { ...numberState };
 
   const maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors,
-    (errorsArray, msg) => {
+    (valid, errorsArray, msg) => {
       numberState.errors = errorsArray;
-      numberState.errorMessage = msg;
-      if (msg.length > 0) return true;
+      if (msg) {
+        numberState.valid = valid;
+        numberState.errorMessage = msg;
+        return true;
+      }
       return false;
     });
   if (maxError) return { ...numberState };
@@ -43,6 +52,7 @@ function number(currentValue, state, name) {
 
     if (currentValue.includes('.') && format === 'int') {
       const errs = setStandarError(errors, notInteger.error);
+      numberState.valid = false;
       numberState.errors = errs;
       numberState.errorMessage = notInteger.msg;
       return { ...numberState };
@@ -63,9 +73,12 @@ function number(currentValue, state, name) {
   numberState.toWrite = toWrite;
 
   minSizeValidation(toWrite, maxSize, minSize, numberErrors, numberState.errors,
-    (arrayErrors, msg) => {
+    (valid, arrayErrors, msg) => {
       numberState.errors = arrayErrors;
-      numberState.errorMessage = msg;
+      if (msg) {
+        numberState.valid = valid;
+        numberState.errorMessage = msg;
+      }
     });
 
   return { ...numberState };

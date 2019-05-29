@@ -9,11 +9,11 @@ function maxSizeValidation(toWrite, maxSize, errorCodes, currentErrors, callback
   const sizeError = createMaxSizeError(errorCodes, maxSize);
   if (toWrite + 1 === 0) {
     const errors = setStandarError(currentErrors, sizeError.error);
-    return callback(errors, sizeError.message);
+    return callback(false, errors, sizeError.message);
   }
 
   const errors = removeStandarError(currentErrors, sizeError.error);
-  return callback(errors, '');
+  return callback(true, errors);
 }
 
 
@@ -21,11 +21,11 @@ function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors,
   const sizeError = createMinSizeError(errorCodes, minSize);
   if (toWrite > maxSize - minSize) {
     const errors = setStandarError(currentErrors, sizeError.error);
-    return callback(errors, sizeError.message);
+    return callback(false, errors, sizeError.message);
   }
 
   const errors = removeStandarError(currentErrors, sizeError.error);
-  return callback(errors, '');
+  return callback(true, errors);
 }
 
 
@@ -33,11 +33,11 @@ function patternMatchValidation(pattern, value, errorCodes, currentErrors, callb
   const { notMatch } = errorCodes;
   if (!pattern.test(value)) {
     const errors = setStandarError(currentErrors, notMatch.error);
-    return callback(errors, notMatch.message);
+    return callback(false, errors, notMatch.message);
   }
 
   const errors = removeStandarError(currentErrors, notMatch.error);
-  return callback(errors, '');
+  return callback(true, errors, '');
 }
 
 function isNumber(value) {
@@ -49,11 +49,11 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   const { notNumber } = errorCodes;
   if (!isNum) {
     const errors = setStandarError(currentErrors, notNumber.error);
-    return callback(errors, notNumber.message);
+    return callback(false, errors, notNumber.message);
   }
 
   const errors = removeStandarError(currentErrors, notNumber.error);
-  return callback(errors, '');
+  return callback(true, errors, '');
 }
 
 function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, callback) {
@@ -80,9 +80,31 @@ function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, ca
   if (validReduceArray.includes(false)) return callback(false, errors, errorCodes.message);
 
   const notErrors = removeStandarError(currentErrors, errorCodes.error);
-  // if (validReduceArray.length === 1 && validReduceArray[0] === 'notRequired') {
-  //   return callback(true);
-  // }
+  return callback(true, notErrors);
+}
+
+function hasInvalidFieldsValidation(inputFields, state, errorCodes, currentErrors, callback) {
+  const validArray = [...inputFields].map((field) => {
+    const { name } = field;
+    const currentField = state[name];
+
+    if (currentField) {
+      if (currentField.valid === false) {
+        return false;
+      }
+      return true;
+    }
+    return 'fieldNotDefinedInState';
+  });
+
+  const validReduceArray = validArray.filter((item, index) => (
+    validArray.indexOf(item) === index
+  ));
+
+  const errors = setStandarError(currentErrors, errorCodes.error);
+  if (validReduceArray.includes(false)) return callback(false, errors, errorCodes.message);
+
+  const notErrors = removeStandarError(currentErrors, errorCodes.error);
   return callback(true, notErrors);
 }
 
@@ -94,4 +116,5 @@ export {
   isNumber,
   isNotNumberValidation,
   hasRequiredValidation,
+  hasInvalidFieldsValidation,
 };

@@ -3,6 +3,7 @@ import React from 'react';
 
 import {
   number, text, pattern, hasRequiredValidation, JSONerrors,
+  hasInvalidFieldsValidation,
 } from '../utils';
 
 function useFormValidator() {
@@ -24,16 +25,25 @@ function useFormValidator() {
 
   const requiredValidator = (target, state) => {
     const { formErrors } = JSONerrors;
-    const { requiredFields } = formErrors;
+    const { requiredFields, invalidFields } = formErrors;
     const fields = target.querySelectorAll('input');
     const requiredState = state;
     const { errors = [] } = requiredState;
+
+    requiredState.errorMessage = '';
 
     hasRequiredValidation(fields, requiredState, { ...requiredFields }, errors,
       (valid, errorsArray, msg) => {
         requiredState.valid = valid;
         requiredState.errors = errorsArray;
-        requiredState.errorMessage = msg || '';
+        if (msg) requiredState.errorMessage = msg;
+      });
+
+    hasInvalidFieldsValidation(fields, requiredState, { ...invalidFields }, requiredState.errors,
+      (valid, errorsArray, msg) => {
+        if (requiredState.valid) requiredState.valid = valid;
+        requiredState.errors = errorsArray;
+        if (msg) requiredState.errorMessage = msg;
       });
 
     return { ...requiredState };
