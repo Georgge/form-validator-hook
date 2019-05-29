@@ -4,11 +4,15 @@ import { setStandarError } from './error';
 import { maxSizeValidation, minSizeValidation, isNotNumberValidation } from './generic_validations';
 
 function number(currentValue, state, name) {
-  var numberErrors = Errors.numberErrors;
   var numberState = state[name];
   var rules = numberState.rules,
       _numberState$errors = numberState.errors,
-      errors = _numberState$errors === void 0 ? [] : _numberState$errors;
+      errors = _numberState$errors === void 0 ? [] : _numberState$errors,
+      customMessages = numberState.customMessages;
+
+  var _ref = customMessages || Errors,
+      numberErrors = _ref.numberErrors;
+
   var _rules$format = rules.format,
       format = _rules$format === void 0 ? 'int' : _rules$format,
       _rules$maxSize = rules.maxSize,

@@ -4,10 +4,14 @@ import { maxSizeValidation, minSizeValidation } from './generic_validations';
 
 function text(currentValue, state, name) {
   var textState = state[name];
-  var textErrors = Errors.textErrors;
   var rules = textState.rules,
       _textState$errors = textState.errors,
-      errors = _textState$errors === void 0 ? [] : _textState$errors;
+      errors = _textState$errors === void 0 ? [] : _textState$errors,
+      customMessages = textState.customMessages;
+
+  var _ref = customMessages || Errors,
+      textErrors = _ref.textErrors;
+
   var _rules$maxSize = rules.maxSize,
       maxSize = _rules$maxSize === void 0 ? 100 : _rules$maxSize,
       _rules$minSize = rules.minSize,

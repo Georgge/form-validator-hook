@@ -52,10 +52,8 @@ function password(currentValue, state, name) {
   if (fullSecurity) {
     const { fullSecurity: fse } = passwordErrors;
     const pattern = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*_-])[\w!@#$%^&*]/;
-    console.log(fse);
     patternMatchValidation(pattern, currentValue, { ...fse }, errors,
       (valid, errorsArray, msg) => {
-        console.log(msg);
         passwordState.errors = errorsArray;
         if (msg) {
           passwordState.valid = valid;

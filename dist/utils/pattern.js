@@ -4,11 +4,15 @@ import { maxSizeValidation, minSizeValidation, patternMatchValidation } from './
 
 function pattern(currentValue, state, name) {
   var patternState = state[name];
-  var patternErrors = Errors.patternErrors;
   var pttrn = patternState.pattern,
       rules = patternState.rules,
       _patternState$errors = patternState.errors,
-      errors = _patternState$errors === void 0 ? [] : _patternState$errors;
+      errors = _patternState$errors === void 0 ? [] : _patternState$errors,
+      customMessages = patternState.customMessages;
+
+  var _ref = customMessages || Errors,
+      patternErrors = _ref.patternErrors;
+
   var _rules$maxSize = rules.maxSize,
       maxSize = _rules$maxSize === void 0 ? 100 : _rules$maxSize,
       _rules$minSize = rules.minSize,
@@ -37,7 +41,7 @@ function pattern(currentValue, state, name) {
 
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
-  patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors, function (valid, errorsArray, msg) {
+  patternMatchValidation(pttrn, currentValue, _objectSpread({}, patternErrors.notMatch), patternState.errors, function (valid, errorsArray, msg) {
     patternState.errors = errorsArray;
 
     if (msg) {

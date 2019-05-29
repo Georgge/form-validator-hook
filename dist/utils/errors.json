@@ -7,6 +7,14 @@
     "invalidFields": {
       "error": "invalidFields",
       "message": "There are some fields with invalid values"
+    },
+    "notFormId": {
+      "error": "notFormId",
+      "message": "If you use 'requiredValidatorWithoutSubmit' please define an ID for form. Then define the ID in the root of state (formID: 'idForm')."
+    },
+    "notInputs": {
+      "error": "notInputs",
+      "message": "Not was find inputs. Please verify that form contains inputs or that the form ID is correct."
     }
   },
   "numberErrors": {
@@ -57,6 +65,42 @@
     "minSize": {
       "error": "minSize",
       "message": "The min number of characters is "
+    }
+  },
+  "passwordErrors": {
+    "maxSize": {
+      "error": "maxSize",
+      "message": "The max number of characters is"
+    },
+    "minSize": {
+      "error": "minSize",
+      "message": "The min number of characters is "
+    },
+    "fullSecurity": {
+      "error": "invalidPassword",
+      "message": "Password must have at least: 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character (!@#$%^&*_-)."
+    }
+  },
+  "confirmPasswordErrors": {
+    "notPasswordFather": {
+      "error": "notPasswordFather",
+      "message": "Confirm password must have declared the name of the password father in the state: passwordFather: 'fieldName'."
+    },
+    "notEqual": {
+      "error": "notEqual",
+      "message": "The password confirm not match."
+    },
+    "maxSize": {
+      "error": "maxSize",
+      "message": "The max number of characters is"
+    },
+    "minSize": {
+      "error": "minSize",
+      "message": "The min number of characters is "
+    },
+    "fullSecurity": {
+      "error": "invalidPassword",
+      "message": "Password must have at least: 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character (!@#$%^&*_-)."
     }
   }
 }

@@ -30,15 +30,13 @@ function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors,
 }
 
 function patternMatchValidation(pattern, value, errorCodes, currentErrors, callback) {
-  var notMatch = errorCodes.notMatch;
-
   if (!pattern.test(value)) {
-    var _errors3 = setStandarError(currentErrors, notMatch.error);
+    var _errors3 = setStandarError(currentErrors, errorCodes.error);
 
-    return callback(false, _errors3, notMatch.message);
+    return callback(false, _errors3, errorCodes.message);
   }
 
-  var errors = removeStandarError(currentErrors, notMatch.error);
+  var errors = removeStandarError(currentErrors, errorCodes.error);
   return callback(true, errors, '');
 }
 
@@ -113,4 +111,15 @@ function hasInvalidFieldsValidation(inputFields, state, errorCodes, currentError
   return callback(true, notErrors);
 }
 
-export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation, hasRequiredValidation, hasInvalidFieldsValidation };
+function equalValuesValidation(valueOne, valueTwo, errorCode, currentErrors, callback) {
+  if (valueOne !== valueTwo) {
+    var _errors5 = setStandarError(currentErrors, errorCode.error);
+
+    return callback(false, _errors5, errorCode.message);
+  }
+
+  var errors = removeStandarError(currentErrors, errorCode.error);
+  return callback(true, errors);
+}
+
+export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation, hasRequiredValidation, hasInvalidFieldsValidation, equalValuesValidation };
