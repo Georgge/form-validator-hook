@@ -5,8 +5,10 @@ import {
 
 function pattern(currentValue, state, name) {
   const patternState = state[name];
-  const { patternErrors } = Errors;
-  const { pattern: pttrn, rules, errors = [] } = patternState;
+  const {
+    pattern: pttrn, rules, errors = [], customMessages,
+  } = patternState;
+  const { patternErrors } = customMessages || Errors;
   const {
     maxSize = 100,
     minSize = 0,

@@ -1,0 +1,22 @@
+{
+  "email": {
+    "patternErrors": {
+      "notPattern": {
+        "error": "notPattern",
+        "message": "The pattern is not defined in the state."
+      },
+      "notMatch": {
+        "error": "patternNotMatch",
+        "message": "El email no es valido"
+      },
+      "maxSize": {
+        "error": "maxSize",
+        "message": "The max numbers of characters is "
+      },
+      "minSize": {
+        "error": "minSize",
+        "message": "The min number of characters is "
+      }
+    }
+  }
+}

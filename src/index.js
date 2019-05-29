@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 
+import customMsgs from './customMsgs.json';
 import useFormValidator from './lib';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         maxSize: 20,
         minSize: 10,
       },
+      customMessages: customMsgs.email,
     },
     password: {
       valid: true,

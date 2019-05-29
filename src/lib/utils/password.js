@@ -5,8 +5,8 @@ import {
 
 function password(currentValue, state, name) {
   const passwordState = state[name];
-  const { passwordErrors } = Errors;
-  const { rules, errors = [] } = passwordState;
+  const { rules, errors = [], customMessages } = passwordState;
+  const { passwordErrors } = customMessages || Errors;
   const {
     maxSize = 16,
     minSize = 8,

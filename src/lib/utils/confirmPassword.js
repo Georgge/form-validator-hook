@@ -5,8 +5,10 @@ import {
 
 function confirmPassword(currentValue, state, name) {
   const confirmState = state[name];
-  const { confirmPasswordErrors } = Errors;
-  const { rules, errors = [], passwordFather } = confirmState;
+  const {
+    rules, errors = [], passwordFather, customMessages,
+  } = confirmState;
+  const { confirmPasswordErrors } = customMessages || Errors;
   const passwordState = passwordFather ? state[passwordFather] : false;
   const {
     maxSize = 16,

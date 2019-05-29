@@ -3,8 +3,8 @@ import { maxSizeValidation, minSizeValidation } from './generic_validations';
 
 function text(currentValue, state, name) {
   const textState = state[name];
-  const { textErrors } = Errors;
-  const { rules, errors = [] } = textState;
+  const { rules, errors = [], customMessages } = textState;
+  const { textErrors } = customMessages || Errors;
   const {
     maxSize = 100,
     minSize = 0,

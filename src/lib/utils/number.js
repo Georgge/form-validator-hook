@@ -6,9 +6,9 @@ import {
 } from './generic_validations';
 
 function number(currentValue, state, name) {
-  const { numberErrors } = Errors;
   const numberState = state[name];
-  const { rules, errors = [] } = numberState;
+  const { rules, errors = [], customMessages } = numberState;
+  const { numberErrors } = customMessages || Errors;
   const {
     format = 'int',
     maxSize = 7,
