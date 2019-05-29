@@ -208,3 +208,5 @@ For inputs elements:
 	<tr><td>toWrite</td><td>Number</td><td>The number of characters left to write.</td></tr>
 </table>
 
+## Coming soon
+  - Password validator

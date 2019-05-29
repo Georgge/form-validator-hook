@@ -9,11 +9,11 @@ function maxSizeValidation(toWrite, maxSize, errorCodes, currentErrors, callback
   if (toWrite + 1 === 0) {
     var _errors = setStandarError(currentErrors, sizeError.error);
 
-    return callback(_errors, sizeError.message);
+    return callback(false, _errors, sizeError.message);
   }
 
   var errors = removeStandarError(currentErrors, sizeError.error);
-  return callback(errors, '');
+  return callback(true, errors);
 }
 
 function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors, callback) {
@@ -22,11 +22,11 @@ function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors,
   if (toWrite > maxSize - minSize) {
     var _errors2 = setStandarError(currentErrors, sizeError.error);
 
-    return callback(_errors2, sizeError.message);
+    return callback(false, _errors2, sizeError.message);
   }
 
   var errors = removeStandarError(currentErrors, sizeError.error);
-  return callback(errors, '');
+  return callback(true, errors);
 }
 
 function patternMatchValidation(pattern, value, errorCodes, currentErrors, callback) {
@@ -35,11 +35,11 @@ function patternMatchValidation(pattern, value, errorCodes, currentErrors, callb
   if (!pattern.test(value)) {
     var _errors3 = setStandarError(currentErrors, notMatch.error);
 
-    return callback(_errors3, notMatch.message);
+    return callback(false, _errors3, notMatch.message);
   }
 
   var errors = removeStandarError(currentErrors, notMatch.error);
-  return callback(errors, '');
+  return callback(true, errors, '');
 }
 
 function isNumber(value) {
@@ -53,11 +53,11 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   if (!isNum) {
     var _errors4 = setStandarError(currentErrors, notNumber.error);
 
-    return callback(_errors4, notNumber.message);
+    return callback(false, _errors4, notNumber.message);
   }
 
   var errors = removeStandarError(currentErrors, notNumber.error);
-  return callback(errors, '');
+  return callback(true, errors, '');
 }
 
 function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, callback) {
@@ -84,11 +84,33 @@ function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, ca
   });
   var errors = setStandarError(currentErrors, errorCodes.error);
   if (validReduceArray.includes(false)) return callback(false, errors, errorCodes.message);
-  var notErrors = removeStandarError(currentErrors, errorCodes.error); // if (validReduceArray.length === 1 && validReduceArray[0] === 'notRequired') {
-  //   return callback(true);
-  // }
-
+  var notErrors = removeStandarError(currentErrors, errorCodes.error);
   return callback(true, notErrors);
 }
 
-export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation, hasRequiredValidation };
+function hasInvalidFieldsValidation(inputFields, state, errorCodes, currentErrors, callback) {
+  var validArray = _toConsumableArray(inputFields).map(function (field) {
+    var name = field.name;
+    var currentField = state[name];
+
+    if (currentField) {
+      if (currentField.valid === false) {
+        return false;
+      }
+
+      return true;
+    }
+
+    return 'fieldNotDefinedInState';
+  });
+
+  var validReduceArray = validArray.filter(function (item, index) {
+    return validArray.indexOf(item) === index;
+  });
+  var errors = setStandarError(currentErrors, errorCodes.error);
+  if (validReduceArray.includes(false)) return callback(false, errors, errorCodes.message);
+  var notErrors = removeStandarError(currentErrors, errorCodes.error);
+  return callback(true, notErrors);
+}
+
+export { maxSizeValidation, minSizeValidation, patternMatchValidation, isNumber, isNotNumberValidation, hasRequiredValidation, hasInvalidFieldsValidation };

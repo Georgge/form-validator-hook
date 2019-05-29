@@ -13,18 +13,25 @@ function text(currentValue, state, name) {
       _rules$minSize = rules.minSize,
       minSize = _rules$minSize === void 0 ? 0 : _rules$minSize;
   var toWrite = maxSize - "".concat(currentValue).length;
-  var maxError = maxSizeValidation(toWrite, maxSize, textErrors, errors, function (errorsArray, msg) {
+  textState.errorMessage = '';
+  var maxError = maxSizeValidation(toWrite, maxSize, textErrors, errors, function (valid, errorsArray, msg) {
+    textState.valid = valid;
     textState.errors = errorsArray;
-    textState.errorMessage = msg;
-    if (msg.length > 0) return true;
+
+    if (msg) {
+      textState.errorMessage = msg;
+      return true;
+    }
+
     return false;
   });
   if (maxError) return _objectSpread({}, textState);
   textState.value = currentValue;
   textState.toWrite = toWrite;
-  minSizeValidation(toWrite, maxSize, minSize, textErrors, textState.errors, function (errorsArray, msg) {
+  minSizeValidation(toWrite, maxSize, minSize, textErrors, textState.errors, function (valid, errorsArray, msg) {
+    textState.valid = valid;
     textState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') textState.errorMessage = msg;
+    if (msg) textState.errorMessage = msg;
   });
   return _objectSpread({}, textState);
 }

@@ -3,6 +3,10 @@
     "requiredFields": {
       "error": "requiredFieldsAreEmpty",
       "message": "The mark fields like required should be not empty."
+    },
+    "invalidFields": {
+      "error": "invalidFields",
+      "message": "There are some fields with invalid values"
     }
   },
   "numberErrors": {

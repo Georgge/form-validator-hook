@@ -14,29 +14,44 @@ function pattern(currentValue, state, name) {
       _rules$minSize = rules.minSize,
       minSize = _rules$minSize === void 0 ? 0 : _rules$minSize;
   var toWrite = maxSize - "".concat(currentValue).length;
+  patternState.valid = true;
+  patternState.errorMessage = '';
 
   if (pttrn === '' || pttrn === undefined) {
     var notPattern = patternErrors.notPattern;
     throw new Error("".concat(notPattern.error, " ").concat(notPattern.message));
   }
 
-  var maxError = maxSizeValidation(toWrite, maxSize, patternErrors, errors, function (errorsArray, msg) {
+  var maxError = maxSizeValidation(toWrite, maxSize, patternErrors, errors, function (valid, errorsArray, msg) {
     patternState.errors = errorsArray;
-    patternState.errorMessage = msg;
-    if (msg.length > 0) return true;
+
+    if (msg) {
+      patternState.valid = valid;
+      patternState.errorMessage = msg;
+      return true;
+    }
+
     return false;
   });
   if (maxError) return _objectSpread({}, patternState); // Current value is setting in state
 
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
-  patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors, function (errorsArray, msg) {
+  patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors, function (valid, errorsArray, msg) {
     patternState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
+
+    if (msg) {
+      patternState.valid = valid;
+      patternState.errorMessage = msg;
+    }
   });
-  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (errorsArray, msg) {
+  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (valid, errorsArray, msg) {
     patternState.errors = errorsArray;
-    if (errorsArray.length > 0 && msg !== '') patternState.errorMessage = msg;
+
+    if (msg) {
+      patternState.valid = valid;
+      patternState.errorMessage = msg;
+    }
   });
   return _objectSpread({}, patternState);
 }

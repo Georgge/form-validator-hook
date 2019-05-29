@@ -19,17 +19,29 @@ function number(currentValue, state, name) {
       enforceZero = _rules$enforceZero === void 0 ? false : _rules$enforceZero;
   var toWrite = maxSize - "".concat(currentValue).length;
   var writeDot = false;
-  var isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors, function (errorsArray, msg) {
+  numberState.valid = true;
+  numberState.errorMessage = '';
+  var isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors, function (valid, errorsArray, msg) {
     numberState.errors = errorsArray;
-    numberState.errorMessage = msg;
-    if (msg.length > 0) return true;
+
+    if (msg) {
+      numberState.valid = valid;
+      numberState.errorMessage = msg;
+      return true;
+    }
+
     return false;
   });
   if (isNotNumber) return _objectSpread({}, numberState);
-  var maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors, function (errorsArray, msg) {
+  var maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors, function (valid, errorsArray, msg) {
     numberState.errors = errorsArray;
-    numberState.errorMessage = msg;
-    if (msg.length > 0) return true;
+
+    if (msg) {
+      numberState.valid = valid;
+      numberState.errorMessage = msg;
+      return true;
+    }
+
     return false;
   });
   if (maxError) return _objectSpread({}, numberState);
@@ -39,6 +51,7 @@ function number(currentValue, state, name) {
 
     if (currentValue.includes('.') && format === 'int') {
       var errs = setStandarError(errors, notInteger.error);
+      numberState.valid = false;
       numberState.errors = errs;
       numberState.errorMessage = notInteger.msg;
       return _objectSpread({}, numberState);
@@ -56,9 +69,13 @@ function number(currentValue, state, name) {
   if (currentValue === '' && !enforceZero) virtualValue = '';
   numberState.value = virtualValue;
   numberState.toWrite = toWrite;
-  minSizeValidation(toWrite, maxSize, minSize, numberErrors, numberState.errors, function (arrayErrors, msg) {
+  minSizeValidation(toWrite, maxSize, minSize, numberErrors, numberState.errors, function (valid, arrayErrors, msg) {
     numberState.errors = arrayErrors;
-    numberState.errorMessage = msg;
+
+    if (msg) {
+      numberState.valid = valid;
+      numberState.errorMessage = msg;
+    }
   });
   return _objectSpread({}, numberState);
 }
