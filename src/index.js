@@ -6,7 +6,7 @@ import { render } from 'react-dom';
 import useFormValidator from './lib';
 
 function App() {
-  const { typeValidator, requiredValidatorWithoutSubmit, requiredValidator } = useFormValidator();
+  const { typeValidator, requiredValidatorWithoutSubmit } = useFormValidator();
   const [state, setState] = useState({
     valid: false,
     formId: 'exampleForm',

@@ -3,7 +3,7 @@ import React from 'react';
 
 import {
   number, text, pattern, password,
-  confirmPassword, requiredWithoutSubmit, required
+  confirmPassword, requiredWithoutSubmit, required,
 } from '../utils';
 
 function useFormValidator() {
