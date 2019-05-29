@@ -167,7 +167,7 @@ console.log(state.valid)
 
 Both methods response with the same structure (the declared state) but with different values. So, here are a little response example based in the example of **Basic Usage** section:
 
-```json
+```javascript
 {
 	valid: false,
 	errorMessage: "There are some fields with invalid values",
@@ -190,8 +190,21 @@ Both methods response with the same structure (the declared state) but with diff
 Like you see the response is very similar to the declared state, but the values changed even are added some.
 
 #### Important attributes of the response.
+For form:
 <table>
 	<tr> <th>Attribute</th><th>Value</th><th>Description</th></tr>
 	<tr><td>valid</td><td>Bolean</td><td>Determine if the form is valid, by default should be declared like `false` in the `state`.</td></tr>
+	<tr><td>errorMessage</td><td>String</td><td>Current error message.</td></tr>
+	<tr><td>errors</td><td>String array</td><td>The error codes of all current errors for form.</td></tr>
+</table>
+
+For inputs elements:
+<table>
+	<tr> <th>Attribute</th><th>Value</th><th>Description</th></tr>
+	<tr><td>value</td><td>String / number</td><td>The current vale of input</td></tr>
+	<tr><td>valid</td><td>Bolean</td><td>Determine if the form is valid, by default should be declared like `false` in the `state`.</td></tr>
+	<tr><td>errorMessage</td><td>String</td><td>Current error message.</td></tr>
+	<tr><td>errors</td><td>String array</td><td>The error codes of all current errors for spesifict input.</td></tr>
+	<tr><td>toWrite</td><td>Number</td><td>The number of characters left to write.</td></tr>
 </table>
 
