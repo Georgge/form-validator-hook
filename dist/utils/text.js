@@ -17,12 +17,13 @@ function text(currentValue, state, name) {
       _rules$minSize = rules.minSize,
       minSize = _rules$minSize === void 0 ? 0 : _rules$minSize;
   var toWrite = maxSize - "".concat(currentValue).length;
+  textState.valid = true;
   textState.errorMessage = '';
   var maxError = maxSizeValidation(toWrite, maxSize, textErrors, errors, function (valid, errorsArray, msg) {
-    textState.valid = valid;
     textState.errors = errorsArray;
 
     if (msg) {
+      textState.valid = valid;
       textState.errorMessage = msg;
       return true;
     }

@@ -26,7 +26,6 @@ function App() {
       type: 'text',
       rules: {
         maxSize: 20,
-        minSize: 5,
       },
     },
     pattern: {

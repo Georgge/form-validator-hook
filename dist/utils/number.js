@@ -18,7 +18,7 @@ function number(currentValue, state, name) {
       _rules$maxSize = rules.maxSize,
       maxSize = _rules$maxSize === void 0 ? 7 : _rules$maxSize,
       _rules$minSize = rules.minSize,
-      minSize = _rules$minSize === void 0 ? 5 : _rules$minSize,
+      minSize = _rules$minSize === void 0 ? 0 : _rules$minSize,
       _rules$enforceZero = rules.enforceZero,
       enforceZero = _rules$enforceZero === void 0 ? false : _rules$enforceZero;
   var toWrite = maxSize - "".concat(currentValue).length;

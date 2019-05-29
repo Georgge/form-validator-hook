@@ -12,13 +12,14 @@ function text(currentValue, state, name) {
 
   const toWrite = maxSize - `${currentValue}`.length;
 
+  textState.valid = true;
   textState.errorMessage = '';
 
   const maxError = maxSizeValidation(toWrite, maxSize, textErrors, errors,
     (valid, errorsArray, msg) => {
-      textState.valid = valid;
       textState.errors = errorsArray;
       if (msg) {
+        textState.valid = valid;
         textState.errorMessage = msg;
         return true;
       }

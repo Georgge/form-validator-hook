@@ -12,7 +12,7 @@ function number(currentValue, state, name) {
   const {
     format = 'int',
     maxSize = 7,
-    minSize = 5,
+    minSize = 0,
     enforceZero = false,
   } = rules;
 
