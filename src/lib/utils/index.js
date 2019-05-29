@@ -4,6 +4,8 @@ import {
   hasInvalidFieldsValidation,
 } from './generic_validations';
 import { setStandarError } from './error';
+import required from './required';
+import requiredWithoutSubmit from './requiredWithoutSubmit';
 import number from './number';
 import pattern from './pattern';
 import text from './text';
@@ -15,6 +17,8 @@ export {
   maxSizeValidation,
   minSizeValidation,
   setStandarError,
+  required,
+  requiredWithoutSubmit,
   number,
   pattern,
   text,

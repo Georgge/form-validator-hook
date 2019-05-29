@@ -6,9 +6,10 @@ import { render } from 'react-dom';
 import useFormValidator from './lib';
 
 function App() {
-  const { typeValidator, requiredValidator } = useFormValidator();
+  const { typeValidator, requiredValidatorWithoutSubmit, requiredValidator } = useFormValidator();
   const [state, setState] = useState({
     valid: false,
+    formId: 'exampleForm',
     number: {
       valid: true,
       value: '',
@@ -63,16 +64,17 @@ function App() {
 
   const handleChange = (e) => {
     const { target } = e;
-    const status = typeValidator(target, state);
+    const typeValidation = typeValidator(target, state);
+    const status = requiredValidatorWithoutSubmit(typeValidation);
     setState(status);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { target } = e;
-    const status = requiredValidator(target, state);
-    setState(status);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const { target } = e;
+  //   const status = requiredValidator(target, state);
+  //   setState(status);
+  // };
 
   const {
     number, text, pattern, password, passwordConfirm,
@@ -80,7 +82,7 @@ function App() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form id="exampleForm">
         <div>
           Valid form:
           { `${state.valid}` }
