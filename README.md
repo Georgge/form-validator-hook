@@ -10,7 +10,7 @@ FVH use a state local or context for define the input rules,  then the onChange 
 or
 `yarn add form-validator-hook`
 
-## Usage
+## Basic Usage
 
 ```javascript
 import React, { useState } from 'react';
@@ -99,3 +99,99 @@ export default App;
 ------------
 
 **IMPORTANT:** The name field declared in the state should be the same that "name" property of input element.
+
+## Hook Methods
+
+Both methods are available in the hook. There examples are based in basic usage (above)
+
+```javascript
+/* ...more code above, this is only a piece of code */
+import useFormValidator from 'form-validator-hook'
+
+function NameFunction() {
+	const { typeValidator, requiredValidator } = useFormValidator();
+/* more code down... */
+
+```
+
+### typeValidator(target, state)
+
+This validate the field type by the `onChange` event, its important to know that this method recibe two obligatory args: **the `target` prop of `input` and the `state`** of form fields. See the down example with a handle `arrow function`:
+
+```javascript
+const handleChange = (event) => {
+    const { target } = event; // target destructuring (this is the input target)
+    const status = typeValidator(target, state); // hook response
+    setState(status); // set state with new validations obtains from typeValidator
+  };
+```
+
+Call the `handleChange` function from `input element` and get the current value (use destructuring for get the field from state):
+
+```javascript
+<input type="text" name="text" onChange={handleChange} value={text.value} />
+```
+**VERY IMPORTANT:** the method take the `name prop` of `input element` to search the corresponding field in the `state`. So, the name should be the same in the `state` and in the `input`
+
+### requiredValidator(target, state)
+
+This validate the required fields, also it's check if all values are valids before to do the `submit`. This method is invoked in the `onSubmit` event, its important to know that this method recibe two obligatory args: **the `target` prop of `submit event` and the state** of form fields. See the down example with a handle arrow function:
+
+```javascript
+const handleSubmit = (event) => {
+    e.preventDefault(); // important for not send the form
+    const { target } = event; // target of submit event
+    const status = requiredValidator(target, state); // hook response
+    setState(status); // set new validations
+  };
+```
+
+Call the handleSubmit function:
+
+```javascript
+<form onSubmit={handleSubmit}>
+```
+
+Invoke the handleSubmit function (button inside form):
+
+```javascript
+<button type="submit">Validate</button>
+```
+Know if form is valid:
+
+```javascript
+console.log(state.valid)
+```
+
+###  Response of the methods
+
+Both methods response with the same structure (the declared state) but with different values. So, here are a little response example based in the example of **Basic Usage** section:
+
+```json
+{
+	valid: false,
+	errorMessage: "There are some fields with invalid values",
+	errors: ["invalidFields"],
+	text: {
+		errorMessage: ""
+		errors: []
+		required: true
+		rules: {maxSize: 20, minSize: 5}
+		toWrite: 15
+		type: "text"
+		valid: true
+		value: "1111a"
+	},
+	number: {...}
+	pattern: {...}
+}
+```
+
+Like you see the response is very similar to the declared state, but the values changed even are added some.
+
+#### Important attributes of the response.
+<table>
+	<tr> <th>Attribute</th><th>Value</th><th>Description</th></tr>
+	<tr><td>valid</td><td>Bolean</td><td>Determine if the form is valid, by default should be declared like `false` in the `state`.</td></tr>
+</table>
+
