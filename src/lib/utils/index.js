@@ -7,6 +7,7 @@ import { setStandarError } from './error';
 import number from './number';
 import pattern from './pattern';
 import text from './text';
+import password from './password';
 
 export {
   JSONerrors,
@@ -16,6 +17,7 @@ export {
   number,
   pattern,
   text,
+  password,
   hasRequiredValidation,
   hasInvalidFieldsValidation,
 };

@@ -39,7 +39,7 @@ function pattern(currentValue, state, name) {
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
 
-  patternMatchValidation(pttrn, currentValue, patternErrors, patternState.errors,
+  patternMatchValidation(pttrn, currentValue, { ...patternErrors.notMatch }, patternState.errors,
     (valid, errorsArray, msg) => {
       patternState.errors = errorsArray;
       if (msg) {

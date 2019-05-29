@@ -30,19 +30,20 @@ function minSizeValidation(toWrite, maxSize, minSize, errorCodes, currentErrors,
 
 
 function patternMatchValidation(pattern, value, errorCodes, currentErrors, callback) {
-  const { notMatch } = errorCodes;
   if (!pattern.test(value)) {
-    const errors = setStandarError(currentErrors, notMatch.error);
-    return callback(false, errors, notMatch.message);
+    const errors = setStandarError(currentErrors, errorCodes.error);
+    return callback(false, errors, errorCodes.message);
   }
 
-  const errors = removeStandarError(currentErrors, notMatch.error);
+  const errors = removeStandarError(currentErrors, errorCodes.error);
   return callback(true, errors, '');
 }
+
 
 function isNumber(value) {
   return !Number.isNaN(Number(value));
 }
+
 
 function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   const isNum = isNumber(value);
@@ -55,6 +56,7 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
   const errors = removeStandarError(currentErrors, notNumber.error);
   return callback(true, errors, '');
 }
+
 
 function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, callback) {
   // eslint-disable-next-line consistent-return
@@ -82,6 +84,7 @@ function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, ca
   const notErrors = removeStandarError(currentErrors, errorCodes.error);
   return callback(true, notErrors);
 }
+
 
 function hasInvalidFieldsValidation(inputFields, state, errorCodes, currentErrors, callback) {
   const validArray = [...inputFields].map((field) => {

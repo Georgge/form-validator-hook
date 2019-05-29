@@ -38,6 +38,15 @@ function App() {
         minSize: 10,
       },
     },
+    password: {
+      valid: true,
+      required: true,
+      value: '',
+      type: 'password',
+      rules: {
+
+      },
+    },
   });
 
   console.log(state);
@@ -55,7 +64,9 @@ function App() {
     setState(status);
   };
 
-  const { number, text, pattern } = state;
+  const {
+    number, text, pattern, password,
+  } = state;
 
   return (
     <div>
@@ -79,6 +90,11 @@ function App() {
           <label>Pattern (email example)</label>
           <input type="text" name="pattern" onChange={handleChange} value={pattern.value} />
           <div>{ pattern.errorMessage }</div>
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" name="password" onChange={handleChange} value={password.value} />
+          <div>{ password.errorMessage }</div>
         </div>
         <div>
           <button type="submit">Validate</button>

@@ -2,8 +2,8 @@
 import React from 'react';
 
 import {
-  number, text, pattern, hasRequiredValidation, JSONerrors,
-  hasInvalidFieldsValidation,
+  number, text, pattern, password, hasRequiredValidation,
+  hasInvalidFieldsValidation, JSONerrors,
 } from '../utils';
 
 function useFormValidator() {
@@ -18,6 +18,8 @@ function useFormValidator() {
         return { ...state, [name]: { ...text(value, state, name) } };
       case 'pattern':
         return { ...state, [name]: { ...pattern(value, state, name) } };
+      case 'password':
+        return { ...state, [name]: { ...password(value, state, name) } };
       default:
         return { ...state };
     }
