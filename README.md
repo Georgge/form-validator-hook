@@ -202,7 +202,7 @@ For inputs elements:
 <table>
 	<tr> <th>Attribute</th><th>Value</th><th>Description</th></tr>
 	<tr><td>value</td><td>String / number</td><td>The current vale of input</td></tr>
-	<tr><td>valid</td><td>Bolean</td><td>Determine if the form is valid, by default should be declared like `false` in the `state`.</td></tr>
+	<tr><td>valid</td><td>Bolean</td><td>Determine if the form is valid, by default should be declared like `true` in the `state`.</td></tr>
 	<tr><td>errorMessage</td><td>String</td><td>Current error message.</td></tr>
 	<tr><td>errors</td><td>String array</td><td>The error codes of all current errors for spesifict input.</td></tr>
 	<tr><td>toWrite</td><td>Number</td><td>The number of characters left to write.</td></tr>
