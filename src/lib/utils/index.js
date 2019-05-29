@@ -8,6 +8,7 @@ import number from './number';
 import pattern from './pattern';
 import text from './text';
 import password from './password';
+import confirmPassword from './confirmPassword';
 
 export {
   JSONerrors,
@@ -18,6 +19,7 @@ export {
   pattern,
   text,
   password,
+  confirmPassword,
   hasRequiredValidation,
   hasInvalidFieldsValidation,
 };

@@ -72,5 +72,23 @@
       "error": "invalidPassword",
       "message": "Password must have at least: 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character (!@#$%^&*_-)."
     }
+  },
+  "confirmPasswordErrors": {
+    "notPasswordFather": {
+      "error": "notPasswordFather",
+      "message": "Confirm password must have declared the name of the password father in the state: passwordFather: 'fieldName'."
+    },
+    "maxSize": {
+      "error": "maxSize",
+      "message": "The max number of characters is"
+    },
+    "minSize": {
+      "error": "minSize",
+      "message": "The min number of characters is "
+    },
+    "fullSecurity": {
+      "error": "invalidPassword",
+      "message": "Password must have at least: 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character (!@#$%^&*_-)."
+    }
   }
 }

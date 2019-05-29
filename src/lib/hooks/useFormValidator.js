@@ -3,7 +3,7 @@ import React from 'react';
 
 import {
   number, text, pattern, password, hasRequiredValidation,
-  hasInvalidFieldsValidation, JSONerrors,
+  hasInvalidFieldsValidation, JSONerrors, confirmPassword,
 } from '../utils';
 
 function useFormValidator() {
@@ -20,6 +20,8 @@ function useFormValidator() {
         return { ...state, [name]: { ...pattern(value, state, name) } };
       case 'password':
         return { ...state, [name]: { ...password(value, state, name) } };
+      case 'confirm-password':
+        return { ...state, [name]: { ...confirmPassword(value, state, name) } };
       default:
         return { ...state };
     }

@@ -47,6 +47,16 @@ function App() {
 
       },
     },
+    passwordConfirm: {
+      valid: false,
+      required: true,
+      value: '',
+      type: 'confirm-password',
+      passwordFather: 'password',
+      rules: {
+
+      },
+    },
   });
 
   console.log(state);
@@ -65,7 +75,7 @@ function App() {
   };
 
   const {
-    number, text, pattern, password,
+    number, text, pattern, password, passwordConfirm,
   } = state;
 
   return (
@@ -95,6 +105,11 @@ function App() {
           <label>Password</label>
           <input type="password" name="password" onChange={handleChange} value={password.value} />
           <div>{ password.errorMessage }</div>
+        </div>
+        <div>
+          <label>Password Confirm</label>
+          <input type="password" name="passwordConfirm" onChange={handleChange} value={passwordConfirm.value} />
+          <div>{ passwordConfirm.errorMessage }</div>
         </div>
         <div>
           <button type="submit">Validate</button>

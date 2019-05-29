@@ -1,6 +1,6 @@
 import Errors from './errors.json';
 import {
-  maxSizeValidation, minSizeValidation, patternMatchValidation
+  maxSizeValidation, minSizeValidation, patternMatchValidation,
 } from './generic_validations';
 
 function password(currentValue, state, name) {
