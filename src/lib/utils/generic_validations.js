@@ -112,6 +112,16 @@ function hasInvalidFieldsValidation(inputFields, state, errorCodes, currentError
 }
 
 
+function equalValuesValidation(valueOne, valueTwo, errorCode, currentErrors, callback) {
+  if (valueOne !== valueTwo) {
+    const errors = setStandarError(currentErrors, errorCode.error);
+    return callback(false, errors, errorCode.message);
+  }
+  const errors = removeStandarError(currentErrors, errorCode.error);
+  return callback(true, errors);
+}
+
+
 export {
   maxSizeValidation,
   minSizeValidation,
@@ -120,4 +130,5 @@ export {
   isNotNumberValidation,
   hasRequiredValidation,
   hasInvalidFieldsValidation,
+  equalValuesValidation,
 };

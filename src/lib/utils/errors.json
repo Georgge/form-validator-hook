@@ -78,6 +78,10 @@
       "error": "notPasswordFather",
       "message": "Confirm password must have declared the name of the password father in the state: passwordFather: 'fieldName'."
     },
+    "notEqual": {
+      "error": "notEqual",
+      "message": "The password confirm not match."
+    },
     "maxSize": {
       "error": "maxSize",
       "message": "The max number of characters is"
