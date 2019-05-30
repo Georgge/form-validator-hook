@@ -1,11 +1,14 @@
 import Errors from './errors.json';
+import { setTemporalError } from './error';
 import {
   maxSizeValidation, minSizeValidation, patternMatchValidation,
 } from './generic_validations';
 
-function password(currentValue, state, name) {
+function password(currentValue, state, name, setState) {
   const passwordState = state[name];
-  const { rules, errors = [], customMessages } = passwordState;
+  const {
+    rules, errors = [], customMessages, temporalMessagesTime,
+  } = passwordState;
   const { passwordErrors } = customMessages || Errors;
   const {
     maxSize = 16,
@@ -19,15 +22,13 @@ function password(currentValue, state, name) {
   const toWrite = maxSize - `${currentValue}`.length;
   const fullSecurity = upperCases && lowerCases && numbers && specials;
 
-  passwordState.valid = true;
-  passwordState.errorMessage = '';
-
 
   const maxError = maxSizeValidation(toWrite, maxSize, passwordErrors, errors,
     (valid, errorsArray, msg) => {
-      passwordState.errors = errorsArray;
       if (msg) {
-        passwordState.valid = valid;
+        const currentMessage = passwordState.errorMessage;
+        console.log(currentMessage);
+        setTemporalError(currentMessage, state, name, setState, temporalMessagesTime);
         passwordState.errorMessage = msg;
         return true;
       }
@@ -35,8 +36,8 @@ function password(currentValue, state, name) {
     });
   if (maxError) return { ...passwordState };
 
-
-  // Current value is setting in state
+  passwordState.valid = true;
+  passwordState.errorMessage = '';
   passwordState.value = currentValue;
   passwordState.toWrite = toWrite;
 

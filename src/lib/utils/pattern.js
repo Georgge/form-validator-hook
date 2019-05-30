@@ -1,12 +1,14 @@
 import Errors from './errors.json';
+import { setTemporalError } from './error';
 import {
   maxSizeValidation, minSizeValidation, patternMatchValidation,
 } from './generic_validations';
 
-function pattern(currentValue, state, name) {
+function pattern(currentValue, state, name, setState) {
   const patternState = state[name];
   const {
     pattern: pttrn, rules, errors = [], customMessages,
+    temporalMessagesTime,
   } = patternState;
   const { patternErrors } = customMessages || Errors;
   const {
@@ -16,9 +18,6 @@ function pattern(currentValue, state, name) {
 
   const toWrite = maxSize - `${currentValue}`.length;
 
-  patternState.valid = true;
-  patternState.errorMessage = '';
-
   if (pttrn === '' || pttrn === undefined) {
     const { notPattern } = patternErrors;
     throw new Error(`${notPattern.error} ${notPattern.message}`);
@@ -26,9 +25,9 @@ function pattern(currentValue, state, name) {
 
   const maxError = maxSizeValidation(toWrite, maxSize, patternErrors, errors,
     (valid, errorsArray, msg) => {
-      patternState.errors = errorsArray;
       if (msg) {
-        patternState.valid = valid;
+        const currentMessage = patternState.errorMessage;
+        setTemporalError(currentMessage, state, name, setState, temporalMessagesTime);
         patternState.errorMessage = msg;
         return true;
       }
@@ -37,7 +36,8 @@ function pattern(currentValue, state, name) {
   if (maxError) return { ...patternState };
 
 
-  // Current value is setting in state
+  patternState.valid = true;
+  patternState.errorMessage = '';
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
 

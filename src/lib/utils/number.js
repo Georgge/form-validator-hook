@@ -1,5 +1,5 @@
 import Errors from './errors.json';
-import { setStandarError } from './error';
+import { setStandarError, setTemporalError } from './error';
 import {
   maxSizeValidation, minSizeValidation,
   isNotNumberValidation,
@@ -7,7 +7,9 @@ import {
 
 function number(currentValue, state, name, setState) {
   const numberState = state[name];
-  const { rules, errors = [], customMessages } = numberState;
+  const {
+    rules, errors = [], customMessages, temporalMessagesTime,
+  } = numberState;
   const { numberErrors } = customMessages || Errors;
   const {
     format = 'int',
@@ -24,15 +26,7 @@ function number(currentValue, state, name, setState) {
     (valid, errorsArray, msg) => {
       if (msg) {
         const currentMessage = numberState.errorMessage;
-        setTimeout(() => {
-          setState({
-            ...state,
-            [name]: {
-              ...numberState,
-              errorMessage: currentMessage,
-            },
-          });
-        }, 1000);
+        setTemporalError(currentMessage, state, name, setState, temporalMessagesTime);
         numberState.errorMessage = msg;
         return true;
       }
@@ -44,15 +38,7 @@ function number(currentValue, state, name, setState) {
     (valid, errorsArray, msg) => {
       if (msg) {
         const currentMessage = numberState.errorMessage;
-        setTimeout(() => {
-          setState({
-            ...state,
-            [name]: {
-              ...numberState,
-              errorMessage: currentMessage,
-            },
-          });
-        }, 1000);
+        setTemporalError(currentMessage, state, name, setState, temporalMessagesTime);
         numberState.errorMessage = msg;
         return true;
       }

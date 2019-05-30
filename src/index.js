@@ -50,7 +50,7 @@ function App() {
       },
     },
     passwordConfirm: {
-      valid: false,
+      valid: true,
       required: true,
       value: '',
       type: 'confirm-password',

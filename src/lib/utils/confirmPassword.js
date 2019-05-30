@@ -1,12 +1,14 @@
 import Errors from './errors.json';
+import { setTemporalError } from './error';
 import {
   maxSizeValidation, minSizeValidation, equalValuesValidation,
 } from './generic_validations';
 
-function confirmPassword(currentValue, state, name) {
+function confirmPassword(currentValue, state, name, setState) {
   const confirmState = state[name];
   const {
     rules, errors = [], passwordFather, customMessages,
+    temporalMessagesTime,
   } = confirmState;
   const { confirmPasswordErrors } = customMessages || Errors;
   const passwordState = passwordFather ? state[passwordFather] : false;
@@ -17,9 +19,6 @@ function confirmPassword(currentValue, state, name) {
 
   const toWrite = maxSize - `${currentValue}`.length;
 
-  confirmState.valid = true;
-  confirmState.errorMessage = '';
-
   if (passwordFather === '' || passwordFather === undefined) {
     const { notPasswordFather } = confirmPasswordErrors;
     throw new Error(`[${notPasswordFather.error}] ${notPasswordFather.message}`);
@@ -28,9 +27,9 @@ function confirmPassword(currentValue, state, name) {
 
   const maxError = maxSizeValidation(toWrite, maxSize, confirmPasswordErrors, errors,
     (valid, errorsArray, msg) => {
-      confirmState.errors = errorsArray;
       if (msg) {
-        confirmState.valid = valid;
+        const currentError = confirmState.errorMessage;
+        setTemporalError(currentError, state, name, setState, temporalMessagesTime);
         confirmState.errorMessage = msg;
         return true;
       }
@@ -39,7 +38,8 @@ function confirmPassword(currentValue, state, name) {
   if (maxError) return { ...confirmState };
 
 
-  // Current value is setting in state
+  confirmState.valid = true;
+  confirmState.errorMessage = '';
   confirmState.value = currentValue;
   confirmState.toWrite = toWrite;
 
