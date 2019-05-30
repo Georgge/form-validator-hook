@@ -1,18 +1,24 @@
 import Errors from './errors.json';
 import { setTemporalError } from './error';
+import { trimLeft, trimMultipleSpecials } from './generalUtils';
 import { maxSizeValidation, minSizeValidation } from './generic_validations';
 
-function text(currentValue, state, name, setState) {
+function text(value, state, name, setState) {
   const textState = state[name];
   const {
     rules, errors = [], customMessages,
-    temporalMessagesTime,
+    temporalMessagesTime, trim,
   } = textState;
   const { textErrors } = customMessages || Errors;
   const {
     maxSize = 100,
     minSize = 0,
   } = rules;
+
+  let currentValue = value;
+  if (trim === 'sides') currentValue = value.trim();
+  if (trim === 'start') currentValue = trimLeft(value);
+  if (trim === 'multiples') currentValue = trimMultipleSpecials(value);
 
   const toWrite = maxSize - `${currentValue}`.length;
 

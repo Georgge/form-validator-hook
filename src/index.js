@@ -24,6 +24,7 @@ function App() {
       required: true,
       value: '',
       type: 'text',
+      trim: 'multiples',
       rules: {
         maxSize: 20,
       },
@@ -33,6 +34,7 @@ function App() {
       required: true,
       value: '',
       type: 'pattern',
+      trim: 'sides',
       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       rules: {
         maxSize: 20,

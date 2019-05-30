@@ -1,20 +1,26 @@
 import Errors from './errors.json';
 import { setTemporalError } from './error';
+import { trimLeft, trimMultipleSpecials } from './generalUtils';
 import {
   maxSizeValidation, minSizeValidation, patternMatchValidation,
 } from './generic_validations';
 
-function pattern(currentValue, state, name, setState) {
+function pattern(value, state, name, setState) {
   const patternState = state[name];
   const {
     pattern: pttrn, rules, errors = [], customMessages,
-    temporalMessagesTime,
+    temporalMessagesTime, trim,
   } = patternState;
   const { patternErrors } = customMessages || Errors;
   const {
     maxSize = 100,
     minSize = 0,
   } = rules;
+
+  let currentValue = value;
+  if (trim === 'sides') currentValue = value.trim();
+  if (trim === 'start') currentValue = trimLeft(value);
+  if (trim === 'multiples') currentValue = trimMultipleSpecials(value);
 
   const toWrite = maxSize - `${currentValue}`.length;
 
