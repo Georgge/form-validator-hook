@@ -65,7 +65,7 @@ function App() {
 
   const handleChange = (e) => {
     const { target } = e;
-    const typeValidation = typeValidator(target, state);
+    const typeValidation = typeValidator(target, state, setState);
     const status = requiredValidatorWithoutSubmit(typeValidation);
     setState(status);
   };

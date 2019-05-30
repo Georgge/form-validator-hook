@@ -7,21 +7,21 @@ import {
 } from '../utils';
 
 function useFormValidator() {
-  const typeValidator = (target, state) => {
+  const typeValidator = (target, state, setState) => {
     const { name, value } = target;
     const { type } = state[name];
 
     switch (type) {
       case 'number':
-        return { ...state, [name]: { ...number(value, state, name) } };
+        return { ...state, [name]: { ...number(value, state, name, setState) } };
       case 'text':
-        return { ...state, [name]: { ...text(value, state, name) } };
+        return { ...state, [name]: { ...text(value, state, name, setState) } };
       case 'pattern':
-        return { ...state, [name]: { ...pattern(value, state, name) } };
+        return { ...state, [name]: { ...pattern(value, state, name, setState) } };
       case 'password':
-        return { ...state, [name]: { ...password(value, state, name) } };
+        return { ...state, [name]: { ...password(value, state, name, setState) } };
       case 'confirm-password':
-        return { ...state, [name]: { ...confirmPassword(value, state, name) } };
+        return { ...state, [name]: { ...confirmPassword(value, state, name, setState) } };
       default:
         return { ...state };
     }

@@ -5,7 +5,7 @@ import {
   isNotNumberValidation,
 } from './generic_validations';
 
-function number(currentValue, state, name) {
+function number(currentValue, state, name, setState) {
   const numberState = state[name];
   const { rules, errors = [], customMessages } = numberState;
   const { numberErrors } = customMessages || Errors;
@@ -19,15 +19,20 @@ function number(currentValue, state, name) {
   const toWrite = maxSize - `${currentValue}`.length;
   let writeDot = false;
 
-  numberState.valid = true;
-  numberState.errorMessage = '';
-
 
   const isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors,
     (valid, errorsArray, msg) => {
-      numberState.errors = errorsArray;
       if (msg) {
-        numberState.valid = valid;
+        const currentMessage = numberState.errorMessage;
+        setTimeout(() => {
+          setState({
+            ...state,
+            [name]: {
+              ...numberState,
+              errorMessage: currentMessage,
+            },
+          });
+        }, 1000);
         numberState.errorMessage = msg;
         return true;
       }
@@ -37,15 +42,26 @@ function number(currentValue, state, name) {
 
   const maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors,
     (valid, errorsArray, msg) => {
-      numberState.errors = errorsArray;
       if (msg) {
-        numberState.valid = valid;
+        const currentMessage = numberState.errorMessage;
+        setTimeout(() => {
+          setState({
+            ...state,
+            [name]: {
+              ...numberState,
+              errorMessage: currentMessage,
+            },
+          });
+        }, 1000);
         numberState.errorMessage = msg;
         return true;
       }
       return false;
     });
   if (maxError) return { ...numberState };
+
+  numberState.valid = true;
+  numberState.errorMessage = '';
 
   if (format === 'float' || format === 'int') {
     const { notInteger } = numberErrors;

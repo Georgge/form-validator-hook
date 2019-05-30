@@ -1,9 +1,9 @@
-function setStandarError(currentErrros, newError) {
+function setStandarError(currentErrros = [], newError) {
   if (currentErrros.includes(newError)) return currentErrros;
   return [...currentErrros, newError];
 }
 
-function removeStandarError(currentErrros, desiredError) {
+function removeStandarError(currentErrros = [], desiredError) {
   if (currentErrros.includes(desiredError)) {
     const errors = currentErrros.filter(error => error !== desiredError);
     return errors;
