@@ -27,6 +27,7 @@ function App() {
       trim: 'multiples',
       rules: {
         maxSize: 20,
+        minSize: 5,
       },
     },
     pattern: {

@@ -1,3 +1,5 @@
+import { concatenateMessage } from './generalUtils';
+
 function setStandarError(currentErrros = [], newError) {
   if (currentErrros.includes(newError)) return currentErrros;
   return [...currentErrros, newError];
@@ -29,7 +31,7 @@ function setTemporalError(currentErrorMessage, state, name, setState, time = 100
 function createMaxSizeError(Errors, size) {
   const errorSize = {};
   const { maxSize } = Errors;
-  errorSize.message = `${maxSize.message}${size}`;
+  errorSize.message = concatenateMessage(maxSize.message, size);
   errorSize.error = maxSize.error;
 
   return errorSize;
@@ -38,7 +40,7 @@ function createMaxSizeError(Errors, size) {
 function createMinSizeError(Errors, size) {
   const errorSize = {};
   const { minSize } = Errors;
-  errorSize.message = `${minSize.message}${size}`;
+  errorSize.message = concatenateMessage(minSize.message, size);
   errorSize.error = minSize.error;
 
   return errorSize;

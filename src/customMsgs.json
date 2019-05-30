@@ -15,7 +15,7 @@
       },
       "minSize": {
         "error": "minSize",
-        "message": "The min number of characters is "
+        "message": "El email debe tener %msg% caracteres."
       }
     }
   }

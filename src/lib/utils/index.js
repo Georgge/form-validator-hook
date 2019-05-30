@@ -1,9 +1,12 @@
 import JSONerrors from './errors.json';
+import { setStandarError } from './error';
+import {
+  trimLeft, trimMultipleSpecials, concatenateMessage,
+} from './generalUtils';
 import {
   maxSizeValidation, minSizeValidation, hasRequiredValidation,
   hasInvalidFieldsValidation,
 } from './generic_validations';
-import { setStandarError } from './error';
 import required from './required';
 import requiredWithoutSubmit from './requiredWithoutSubmit';
 import number from './number';
@@ -14,9 +17,12 @@ import confirmPassword from './confirmPassword';
 
 export {
   JSONerrors,
+  setStandarError,
+  trimLeft,
+  trimMultipleSpecials,
+  concatenateMessage,
   maxSizeValidation,
   minSizeValidation,
-  setStandarError,
   required,
   requiredWithoutSubmit,
   number,
