@@ -12,6 +12,20 @@ function removeStandarError(currentErrros = [], desiredError) {
   return currentErrros;
 }
 
+function setTemporalError(currentErrorMessage, state, name, setState, time = 1000) {
+  const currentState = state[name];
+
+  setTimeout(() => {
+    setState({
+      ...state,
+      [name]: {
+        ...currentState,
+        errorMessage: currentErrorMessage,
+      },
+    });
+  }, time);
+}
+
 function createMaxSizeError(Errors, size) {
   const errorSize = {};
   const { maxSize } = Errors;
@@ -33,6 +47,7 @@ function createMinSizeError(Errors, size) {
 export {
   setStandarError,
   removeStandarError,
+  setTemporalError,
   createMaxSizeError,
   createMinSizeError,
 };
