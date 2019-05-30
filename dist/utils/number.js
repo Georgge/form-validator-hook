@@ -1,14 +1,15 @@
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import Errors from './errors.json';
-import { setStandarError } from './error';
+import { setStandarError, setTemporalError } from './error';
 import { maxSizeValidation, minSizeValidation, isNotNumberValidation } from './generic_validations';
 
-function number(currentValue, state, name) {
+function number(currentValue, state, name, setState) {
   var numberState = state[name];
   var rules = numberState.rules,
       _numberState$errors = numberState.errors,
       errors = _numberState$errors === void 0 ? [] : _numberState$errors,
-      customMessages = numberState.customMessages;
+      customMessages = numberState.customMessages,
+      temporalMessagesTime = numberState.temporalMessagesTime;
 
   var _ref = customMessages || Errors,
       numberErrors = _ref.numberErrors;
@@ -23,13 +24,10 @@ function number(currentValue, state, name) {
       enforceZero = _rules$enforceZero === void 0 ? false : _rules$enforceZero;
   var toWrite = maxSize - "".concat(currentValue).length;
   var writeDot = false;
-  numberState.valid = true;
-  numberState.errorMessage = '';
   var isNotNumber = isNotNumberValidation(currentValue, numberErrors, errors, function (valid, errorsArray, msg) {
-    numberState.errors = errorsArray;
-
     if (msg) {
-      numberState.valid = valid;
+      var currentMessage = numberState.errorMessage;
+      setTemporalError(currentMessage, state, name, setState, temporalMessagesTime);
       numberState.errorMessage = msg;
       return true;
     }
@@ -38,10 +36,9 @@ function number(currentValue, state, name) {
   });
   if (isNotNumber) return _objectSpread({}, numberState);
   var maxError = maxSizeValidation(toWrite, maxSize, numberErrors, errors, function (valid, errorsArray, msg) {
-    numberState.errors = errorsArray;
-
     if (msg) {
-      numberState.valid = valid;
+      var currentMessage = numberState.errorMessage;
+      setTemporalError(currentMessage, state, name, setState, temporalMessagesTime);
       numberState.errorMessage = msg;
       return true;
     }
@@ -49,6 +46,8 @@ function number(currentValue, state, name) {
     return false;
   });
   if (maxError) return _objectSpread({}, numberState);
+  numberState.valid = true;
+  numberState.errorMessage = '';
 
   if (format === 'float' || format === 'int') {
     var notInteger = numberErrors.notInteger;

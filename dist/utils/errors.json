@@ -32,21 +32,21 @@
     },
     "maxSize": {
       "error": "maxSize",
-      "message": "The max number of characters is "
+      "message": "The max number of characters is %msg%"
     },
     "minSize": {
       "error": "minSize",
-      "message": "The min number of characters is "
+      "message": "The min number of characters is %msg%"
     }
   },
   "textErrors": {
     "maxSize": {
       "error": "maxSize",
-      "message": "The max numbers of characters is "
+      "message": "The max numbers of characters is %msg%"
     },
     "minSize": {
       "error": "minSize",
-      "message": "The min number of characters is "
+      "message": "The min number of characters is %msg%"
     }
   },
   "patternErrors": {
@@ -60,21 +60,21 @@
     },
     "maxSize": {
       "error": "maxSize",
-      "message": "The max numbers of characters is "
+      "message": "The max numbers of characters is %msg%"
     },
     "minSize": {
       "error": "minSize",
-      "message": "The min number of characters is "
+      "message": "The min number of characters is %msg%"
     }
   },
   "passwordErrors": {
     "maxSize": {
       "error": "maxSize",
-      "message": "The max number of characters is"
+      "message": "The max number of characters is %msg%"
     },
     "minSize": {
       "error": "minSize",
-      "message": "The min number of characters is "
+      "message": "The min number of characters is %msg%"
     },
     "fullSecurity": {
       "error": "invalidPassword",
@@ -92,11 +92,11 @@
     },
     "maxSize": {
       "error": "maxSize",
-      "message": "The max number of characters is"
+      "message": "The max number of characters is %msg%"
     },
     "minSize": {
       "error": "minSize",
-      "message": "The min number of characters is "
+      "message": "The min number of characters is %msg%"
     },
     "fullSecurity": {
       "error": "invalidPassword",
