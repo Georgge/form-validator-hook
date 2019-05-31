@@ -9,4 +9,5 @@ import pattern from './pattern';
 import text from './text';
 import password from './password';
 import confirmPassword from './confirmPassword';
-export { JSONerrors, setStandarError, trimLeft, trimMultipleSpecials, concatenateMessage, maxSizeValidation, minSizeValidation, required, requiredWithoutSubmit, number, pattern, text, password, confirmPassword, hasRequiredValidation, hasInvalidFieldsValidation };
+import radio from './radio';
+export { JSONerrors, setStandarError, trimLeft, trimMultipleSpecials, concatenateMessage, maxSizeValidation, minSizeValidation, hasRequiredValidation, hasInvalidFieldsValidation, required, requiredWithoutSubmit, number, pattern, text, password, confirmPassword, radio };

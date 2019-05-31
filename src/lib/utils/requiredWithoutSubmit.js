@@ -14,16 +14,16 @@ function requiredWithoutSubmit(state) {
     throw new Error(`[${notFormId.error}] ${notFormId.message}`);
   }
 
-  const inputs = form.querySelectorAll('input');
+  const fields = form.querySelectorAll('input');
 
   requiredState.valid = true;
   requiredState.errorMessage = '';
 
-  if (!inputs) {
+  if (!fields) {
     throw new Error(`[${notInputs.error}] ${notInputs.message}`);
   }
 
-  hasRequiredValidation(inputs, requiredState, { ...requiredFields }, errors,
+  hasRequiredValidation(fields, requiredState, { ...requiredFields }, errors,
     (valid, errorsArray, msg) => {
       requiredState.errors = errorsArray;
       if (msg) {
@@ -32,7 +32,7 @@ function requiredWithoutSubmit(state) {
       }
     });
 
-  hasInvalidFieldsValidation(inputs, requiredState, { ...invalidFields }, requiredState.errors,
+  hasInvalidFieldsValidation(fields, requiredState, { ...invalidFields }, requiredState.errors,
     (valid, errorsArray, msg) => {
       requiredState.errors = errorsArray;
       if (requiredState.valid) requiredState.valid = valid;

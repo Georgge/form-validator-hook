@@ -7,6 +7,7 @@ function required(target, state) {
   const fields = target.querySelectorAll('input');
   const requiredState = state;
   const { errors = [] } = requiredState;
+  console.log(fields);
 
   requiredState.errorMessage = '';
 

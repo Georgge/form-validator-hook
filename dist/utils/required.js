@@ -10,6 +10,7 @@ function required(target, state) {
   var requiredState = state;
   var _requiredState$errors = requiredState.errors,
       errors = _requiredState$errors === void 0 ? [] : _requiredState$errors;
+  console.log(fields);
   requiredState.errorMessage = '';
   hasRequiredValidation(fields, requiredState, _objectSpread({}, requiredFields), errors, function (valid, errorsArray, msg) {
     requiredState.valid = valid;

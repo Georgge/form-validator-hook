@@ -14,6 +14,7 @@ import pattern from './pattern';
 import text from './text';
 import password from './password';
 import confirmPassword from './confirmPassword';
+import radio from './radio';
 
 export {
   JSONerrors,
@@ -23,6 +24,8 @@ export {
   concatenateMessage,
   maxSizeValidation,
   minSizeValidation,
+  hasRequiredValidation,
+  hasInvalidFieldsValidation,
   required,
   requiredWithoutSubmit,
   number,
@@ -30,6 +33,5 @@ export {
   text,
   password,
   confirmPassword,
-  hasRequiredValidation,
-  hasInvalidFieldsValidation,
+  radio,
 };

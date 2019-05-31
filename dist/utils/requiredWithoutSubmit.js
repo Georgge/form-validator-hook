@@ -18,15 +18,15 @@ function requiredWithoutSubmit(state) {
     throw new Error("[".concat(notFormId.error, "] ").concat(notFormId.message));
   }
 
-  var inputs = form.querySelectorAll('input');
+  var fields = form.querySelectorAll('input');
   requiredState.valid = true;
   requiredState.errorMessage = '';
 
-  if (!inputs) {
+  if (!fields) {
     throw new Error("[".concat(notInputs.error, "] ").concat(notInputs.message));
   }
 
-  hasRequiredValidation(inputs, requiredState, _objectSpread({}, requiredFields), errors, function (valid, errorsArray, msg) {
+  hasRequiredValidation(fields, requiredState, _objectSpread({}, requiredFields), errors, function (valid, errorsArray, msg) {
     requiredState.errors = errorsArray;
 
     if (msg) {
@@ -34,7 +34,7 @@ function requiredWithoutSubmit(state) {
       requiredState.errorMessage = msg;
     }
   });
-  hasInvalidFieldsValidation(inputs, requiredState, _objectSpread({}, invalidFields), requiredState.errors, function (valid, errorsArray, msg) {
+  hasInvalidFieldsValidation(fields, requiredState, _objectSpread({}, invalidFields), requiredState.errors, function (valid, errorsArray, msg) {
     requiredState.errors = errorsArray;
     if (requiredState.valid) requiredState.valid = valid;
     if (msg) requiredState.errorMessage = msg;

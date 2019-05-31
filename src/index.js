@@ -48,9 +48,7 @@ function App() {
       required: true,
       value: '',
       type: 'password',
-      rules: {
-
-      },
+      rules: {},
     },
     passwordConfirm: {
       valid: true,
@@ -58,16 +56,20 @@ function App() {
       value: '',
       type: 'confirm-password',
       passwordFather: 'password',
-      rules: {
-
-      },
+      rules: {},
+    },
+    choice: {
+      valid: true,
+      required: true,
+      value: '',
+      type: 'radio',
     },
   });
 
   console.log(state);
 
-  const handleChange = (e) => {
-    const { target } = e;
+  const handleChange = (event) => {
+    const { target } = event;
     const typeValidation = typeValidator(target, state, setState);
     const status = requiredValidatorWithoutSubmit(typeValidation);
     setState(status);
@@ -116,6 +118,15 @@ function App() {
           <label>Password Confirm</label>
           <input type="password" name="passwordConfirm" onChange={handleChange} value={passwordConfirm.value} />
           <div>{ passwordConfirm.errorMessage }</div>
+        </div>
+        <div>
+          <div>Choice one:</div>
+          <label>1</label>
+          <input type="radio" name="choice" value={1} onChange={handleChange} />
+          <label>2</label>
+          <input type="radio" name="choice" value={2} onChange={handleChange} />
+          <label>3</label>
+          <input type="radio" name="choice" value={3} onChange={handleChange} />
         </div>
         <div>
           <button type="submit">Validate</button>

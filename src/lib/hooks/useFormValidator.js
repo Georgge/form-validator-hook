@@ -2,8 +2,8 @@
 import React from 'react';
 
 import {
-  number, text, pattern, password,
-  confirmPassword, requiredWithoutSubmit, required,
+  number, text, pattern, password, confirmPassword,
+  requiredWithoutSubmit, required, radio,
 } from '../utils';
 
 function useFormValidator() {
@@ -22,6 +22,8 @@ function useFormValidator() {
         return { ...state, [name]: { ...password(value, state, name, setState) } };
       case 'confirm-password':
         return { ...state, [name]: { ...confirmPassword(value, state, name, setState) } };
+      case 'radio':
+        return { ...state, [name]: { ...radio(value, state, name, setState) } };
       default:
         return { ...state };
     }

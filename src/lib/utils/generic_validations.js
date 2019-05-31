@@ -61,8 +61,9 @@ function isNotNumberValidation(value, errorCodes, currentErrors, callback) {
 function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, callback) {
   // eslint-disable-next-line consistent-return
   const validArray = [...inputFields].map((field) => {
-    const { name, value } = field;
+    const { name } = field;
     const currentField = state[name];
+    const { value } = currentField;
 
     if (currentField) {
       if (currentField.required && currentField.required === true) {

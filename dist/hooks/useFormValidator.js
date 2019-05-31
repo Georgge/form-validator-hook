@@ -2,7 +2,7 @@ import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { number, text, pattern, password, confirmPassword, requiredWithoutSubmit, required } from '../utils';
+import { number, text, pattern, password, confirmPassword, requiredWithoutSubmit, required, radio } from '../utils';
 
 function useFormValidator() {
   var typeValidator = function typeValidator(target, state, setState) {
@@ -25,6 +25,9 @@ function useFormValidator() {
 
       case 'confirm-password':
         return _objectSpread({}, state, _defineProperty({}, name, _objectSpread({}, confirmPassword(value, state, name, setState))));
+
+      case 'radio':
+        return _objectSpread({}, state, _defineProperty({}, name, _objectSpread({}, radio(value, state, name, setState))));
 
       default:
         return _objectSpread({}, state);
