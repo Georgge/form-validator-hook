@@ -63,9 +63,9 @@ function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, ca
   const validArray = [...inputFields].map((field) => {
     const { name } = field;
     const currentField = state[name];
-    const { value } = currentField;
 
     if (currentField) {
+      const { value } = currentField;
       if (currentField.required && currentField.required === true) {
         if (`${value}`.length > 0) return true;
         return false;

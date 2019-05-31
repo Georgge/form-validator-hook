@@ -63,9 +63,10 @@ function hasRequiredValidation(inputFields, state, errorCodes, currentErrors, ca
   var validArray = _toConsumableArray(inputFields).map(function (field) {
     var name = field.name;
     var currentField = state[name];
-    var value = currentField.value;
 
     if (currentField) {
+      var value = currentField.value;
+
       if (currentField.required && currentField.required === true) {
         if ("".concat(value).length > 0) return true;
         return false;
