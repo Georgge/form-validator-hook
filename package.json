@@ -1,6 +1,6 @@
 {
   "name": "form-validator-hook",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "license": "MIT",
   "author": {
     "name": "Jorge Garcia",
@@ -50,7 +50,8 @@
   "module": "dist/index.js",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    ".gitignore"
   ],
   "repository": {
     "type": "git",

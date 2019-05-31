@@ -47,7 +47,7 @@ function pattern(value, state, name, setState) {
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
 
-  patternMatchValidation(pttrn, currentValue, { ...patternErrors.notMatch }, patternState.errors,
+  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors,
     (valid, errorsArray, msg) => {
       patternState.errors = errorsArray;
       if (msg) {
@@ -56,7 +56,7 @@ function pattern(value, state, name, setState) {
       }
     });
 
-  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors,
+  patternMatchValidation(pttrn, currentValue, { ...patternErrors.notMatch }, patternState.errors,
     (valid, errorsArray, msg) => {
       patternState.errors = errorsArray;
       if (msg) {

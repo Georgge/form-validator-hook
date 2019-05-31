@@ -47,7 +47,7 @@ function pattern(value, state, name, setState) {
   patternState.errorMessage = '';
   patternState.value = currentValue;
   patternState.toWrite = toWrite;
-  patternMatchValidation(pttrn, currentValue, _objectSpread({}, patternErrors.notMatch), patternState.errors, function (valid, errorsArray, msg) {
+  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (valid, errorsArray, msg) {
     patternState.errors = errorsArray;
 
     if (msg) {
@@ -55,7 +55,7 @@ function pattern(value, state, name, setState) {
       patternState.errorMessage = msg;
     }
   });
-  minSizeValidation(toWrite, maxSize, minSize, patternErrors, patternState.errors, function (valid, errorsArray, msg) {
+  patternMatchValidation(pttrn, currentValue, _objectSpread({}, patternErrors.notMatch), patternState.errors, function (valid, errorsArray, msg) {
     patternState.errors = errorsArray;
 
     if (msg) {
